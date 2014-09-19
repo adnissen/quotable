@@ -1,0 +1,52 @@
+<head>
+  <title>quotable</title>
+</head>
+
+<body>
+{{> headerView}}
+{{> modalView}}  
+<div class="container">
+  <div class="content" id="content">
+  </div>
+</div>
+</body>
+
+<template name="modalView">
+<div id="quoteAddedModal" class="modal">
+  <p>{{flashMessage}}</p>
+</div>
+</template>
+
+<template name="headerView">
+<div class="topcoat-navigation-bar">
+  <div class="topcoat-navigation-bar__item center full">
+    <h1 class="topcoat-navigation-bar__title">quotable</h1>
+  </div>
+</div>
+</template>
+
+<template name="quoteControls">
+<textarea id="quoteEntry" class="topcoat-textarea" rows="4" cols="20" placeholder="What did they say?"></textarea><br><br>
+<button class="ladda-button" data-style="expand-left" data-color="green" id="submitQuote"><span class="ladda-label" >Quote it!</span></button><br><br><br>
+</template>
+
+<template name="homeScreen">
+<div id="homeScreen">
+<center>
+<input type="text" id="userEntry" class="topcoat-text-input" placeholder="Type a twitter user"><br><br>
+<div id="menuQuoteDiv">
+  <button class="ladda-button" id="menuQuote"><span class="ladda-label">Quote</span></button><br><br>
+</div>
+<button class="topcoat-button" id="menuViewQuotes">View Quotes</button><br><br>
+<button class="topcoat-button" id="menuFriend">Add Friend</button><br><br>
+</center>
+</div>
+</template>
+
+<template name="viewQuotesTemplate">
+<div id="viewQuotesDiv">
+<center>
+  <button class="topcoat-button" id="backToHome">Back</button>
+</center>
+</div>
+</template>

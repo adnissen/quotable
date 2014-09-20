@@ -111,10 +111,6 @@ Template.homeScreen.helpers({
   }
 });
 
-Template.modalView.flashMessage = function(){
-  return Session.get("flashMessage");
-}
-
 flash = function(message, color){
   Session.set("flashMessage", message);
   $('#quoteAddedModal').trigger('openModal');

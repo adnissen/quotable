@@ -1,25 +1,38 @@
-.modal{
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  color: #fff;
-  background-color: #27ae60;
-}
 .content{
   position: absolute;
-  top: 20%;
-  margin-left: 15%;
-  margin-right: 15%;
+  top: 70px;
+  width: 100%;
 }
-
+#submitQuote{
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  height:60px;
+  width:100%;
+  font-family: "KarlaBold" !important;
+}
 #quoteEntry{
   display: none;
   border: none;
+  box-shadow: none;
+  background-color: #EEE;
+}
+#userEntry{
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .topcoat-tab-bar__item {
+}
+
+#quoteEntryDiv{
+  width: 100%;
+  background-color: #EEE;
+}
+
+#customLoginButton {
+  font-family: "KarlaBold" !important;
+  width: 100%;
 }
 
 .topcoat-tab-bar__button{
@@ -32,14 +45,30 @@ html, body {
   padding: 0;
 }
 
+@font-face {
+  font-family: 'Karla';
+  src: url(Karla-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KarlaBold';
+  src: url(Karla-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: bold;
+}
+
 body {
 background-color: #FFFFFF !important;
+  font-family: "Karla" !important;
 }
 
 .topcoat-textarea{
   font-size: 1rem !important;
   line-height: 1.2rem !important;
   padding: 1rem !important;
+  padding-left: 0 !important;
 }
 
 .topcoat-text-input{
@@ -54,5 +83,6 @@ background-color: #FFFFFF !important;
 }
 
 .topcoat-navigation-bar__title{
+  z-index: 99999;
   color: #FFFFFF !important;
 }

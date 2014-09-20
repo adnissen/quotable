@@ -26,7 +26,7 @@
 </template>
 
 <template name="quoteControls">
-<textarea id="quoteEntry" class="topcoat-textarea" rows="10" cols="22" placeholder="What did they say?"></textarea><br><br>
+<textarea id="quoteEntry" class="topcoat-textarea" rows="10" cols="22" placeholder="What did they say? This can be more than just a single quote, tag another user by @ mentioning them and it'll show up on their feed too!"></textarea><br><br>
 <input type="text" id="userEntry" class="topcoat-text-input" placeholder="Type a twitter user"><br><br>
 <button class="ladda-button" data-style="expand-left" data-color="green" id="submitQuote"><span class="ladda-label" >Quote it!</span></button><br><br><br>
 </template>
@@ -54,5 +54,17 @@
 <template name="singleQuoteTemplate">
 <div id="singleQuoteDiv">
   {{quote.text}}
+  <br><br>
+  <a class="twitter-share-button" href="https://twitter.com/share"
+    data-related="twitterdev"
+    data-size="large"
+    data-text='"{{quote.text}}" - {{quote.addedTo}}'
+    data-count="none">
+    Tweet
+  </a>
 </div>
+</template>
+
+<template name="customLogin">
+<button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginButton"><span class="ladda-label" >Log in with Twitter</span></button><br><br><br>
 </template>

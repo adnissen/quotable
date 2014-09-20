@@ -8,11 +8,11 @@ Meteor.startup(function(){
     $('#quoteAddedModal').easyModal({overlayColor: "#333"});
   });
   Session.setDefault('activeQuoteMenu', false);
-  if (Meteor.user()){
+  if (Meteor.userId()){
     currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
   }
   else{
-    Blaze.render(Template.loginButtons, document.getElementById('content'));
+    currentScreen = Blaze.render(Template.customLogin, document.getElementById('content'));
   }
 });
 
@@ -28,6 +28,15 @@ Template.quoteControls.rendered = function(){
   $('#submitQuote').addClass('animated bounceInDown');
   $('#userEntry').addClass('animated fadeIn');
 };
+
+Template.customLogin.events({
+  'click #customLoginButton': function(){
+    Meteor.loginWithTwitter(function(){
+      Blaze.remove(currentScreen);
+      currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+    });
+  }
+});
 
 Template.homeScreen.events({
   'click #menuQuote': function() {
@@ -68,6 +77,10 @@ Template.viewQuotesTemplate.events({
 
 Template.singleQuoteTemplate.quote = function(){
   return Quotes.findOne({_id: Session.get('lastQuote')});
+};
+
+Template.singleQuoteTemplate.rendered = function(){
+  window.twttr=(function(d,s,id){var t,js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return}js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);return window.twttr||(t={_e:[],ready:function(f){t._e.push(f)}})}(document,"script","twitter-wjs"));
 };
 
 Template.quoteControls.events({

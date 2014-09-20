@@ -26,14 +26,14 @@
 </template>
 
 <template name="quoteControls">
-<textarea id="quoteEntry" class="topcoat-textarea" rows="4" cols="20" placeholder="What did they say?"></textarea><br><br>
+<textarea id="quoteEntry" class="topcoat-textarea" rows="10" cols="22" placeholder="What did they say?"></textarea><br><br>
+<input type="text" id="userEntry" class="topcoat-text-input" placeholder="Type a twitter user"><br><br>
 <button class="ladda-button" data-style="expand-left" data-color="green" id="submitQuote"><span class="ladda-label" >Quote it!</span></button><br><br><br>
 </template>
 
 <template name="homeScreen">
 <div id="homeScreen">
 <center>
-<input type="text" id="userEntry" class="topcoat-text-input" placeholder="Type a twitter user"><br><br>
 <div id="menuQuoteDiv">
   <button class="ladda-button" id="menuQuote"><span class="ladda-label">Quote</span></button><br><br>
 </div>
@@ -48,5 +48,11 @@
 <center>
   <button class="topcoat-button" id="backToHome">Back</button>
 </center>
+</div>
+</template>
+
+<template name="singleQuoteTemplate">
+<div id="singleQuoteDiv">
+  {{quote.text}}
 </div>
 </template>

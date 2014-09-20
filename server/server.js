@@ -50,10 +50,11 @@ Meteor.methods({
     if (thisUser.profile.friends.indexOf(_addedTo) === -1)
       return "you're not friends with this person";
     _addedBy = this.userId;
+    console.log(_text);
     addedQuote = Quotes.insert({text: _text, timestamp: _timestamp, addedBy: _addedBy, addedTo: _addedTo, timestamp: _timestamp});
     Meteor.users.update({_id: _addedTo}, {$addToSet: {'profile.quotes': addedQuote}});
     Meteor.users.update({_id: this.userId}, {$addToSet: {'profile.addedQuotes': addedQuote}});
-    return "quote inserted";
+    return addedQuote;
   },
   sendFriendRequest: function(_username){
     if (!this.userId)

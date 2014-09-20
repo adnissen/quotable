@@ -16,8 +16,8 @@
 
 #quoteEntry{
   display: none;
+  border: none;
 }
-
 
 .topcoat-tab-bar{
   position: fixed; /* This will be always visible and positioned where you want */

@@ -3,6 +3,14 @@
   top: 70px;
   width: 100%;
 }
+
+#singleQuoteDiv{
+  text-align: left;
+  font-size: 24px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 #submitQuote{
   position:fixed;
   left:0px;

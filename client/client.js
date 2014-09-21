@@ -79,6 +79,11 @@ Template.singleQuoteTemplate.quote = function(){
   return Quotes.findOne({_id: Session.get('lastQuote')});
 };
 
+Template.singleQuoteTemplate.authorName = function(){
+  quote = Quotes.findOne({_id: Session.get('lastQuote')});
+  return Meteor.users.findOne({'profile.quotes': Session.get('lastQuote')}).services.twitter.screenName;
+}
+
 Template.singleQuoteTemplate.rendered = function(){
   window.twttr=(function(d,s,id){var t,js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return}js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);return window.twttr||(t={_e:[],ready:function(f){t._e.push(f)}})}(document,"script","twitter-wjs"));
 };
@@ -95,8 +100,7 @@ Template.quoteControls.events({
       $('#userEntry').addClass('animated fadeOut');
       $('#submitQuote').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){ 
         Session.set('lastQuote', data);
-        Blaze.remove(currentScreen);
-        currentScreen = Blaze.render(Template.singleQuoteTemplate, document.getElementById('content'));
+        Router.go('/quotes/' + Session.get('lastQuote'));
       });
     });
     return;

@@ -29,7 +29,7 @@ Quotes = new Mongo.Collection('quotes');
 
 Meteor.publish("userData", function(){
   if (this.userId)
-    return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}]}, {fields: {_id: 1, 'services': 1, 'username': 1}});
+    return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
 });
 
 Meteor.publish("quotes", function(){

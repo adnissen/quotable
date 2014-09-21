@@ -6,6 +6,7 @@
 {{> headerView}}
 <div class="container">
   <div class="content" id="content">
+    {{> home}}
   </div>
 </div>
 </body>
@@ -52,17 +53,30 @@
 </div>
 </template>
 
+<template name="home">
+
+</template>
+
 <template name="singleQuoteTemplate">
 <div id="singleQuoteDiv">
-  {{quote.text}}
+  <br>
+  <br>
+  <center>
+  <div id="singleQuoteDiv">
+    "{{quote.text}}"
+    <br>
+    <br>
+    - @{{authorName}}
+  </div>
   <br><br>
   <a class="twitter-share-button" href="https://twitter.com/share"
     data-related="twitterdev"
     data-size="large"
-    data-text='"{{quote.text}}" - {{quote.addedTo}}'
+    data-text='"{{quote.text}}" - {{authorName}}'
     data-count="none">
     Tweet
   </a>
+  </center>
 </div>
 </template>
 

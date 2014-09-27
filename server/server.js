@@ -1,5 +1,13 @@
 Meteor.startup(function () {
   // code to run on server at startup
+  ServiceConfiguration.configurations.remove({
+    service: "twitter"
+  });
+  ServiceConfiguration.configurations.insert({
+    service: "twitter",
+    consumerKey: "J0tyG0iiTvJbhpUEEZnwewOtz",
+    secret: "2k75aIzVg1bmcMOltJfpKyiav32CIqBjfBx6mSQ1mYBSYJWkMz"
+  }); 
 });
 
 Accounts.onCreateUser(function(options, user){
@@ -29,7 +37,8 @@ Quotes = new Mongo.Collection('quotes');
 
 Meteor.publish("userData", function(){
   if (this.userId)
-    return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
+    return Meteor.users.find({});
+    //return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
 });
 
 Meteor.publish("quotes", function(){
@@ -41,18 +50,38 @@ Meteor.publish("quotes", function(){
 
 
 Meteor.methods({
+  getUnreadTotal: function(){
+    if (!this.userId)
+      return "not logged in";
+    thisUser = Meteor.users.findOne({_id: this.userId});
+    if (!thisUser.profile.unread)
+       Meteor.users.update({_id: this.userId}, {$set: {'profile.unread': 0}});
+    return thisUser.profile.unread;
+  },
+  clearUnread: function(){
+    if (!this.userId)
+      return "not logged in";
+    thisUser = Meteor.users.findOne({_id: this.userId});
+    if (!thisUser.profile.unread)
+      Meteor.users.update({_id: this.userId}, {$set: {'profile.unread': 0}});
+    Meteor.users.update({_id: this.userId}, {$set: {'profile.unread': 0}});
+    return 0;
+  },
   addQuote: function(_text, _addedTo){
     if (!this.userId)
       return "not logged in";
     //set _timestamp to the current time
     _timestamp = Date.now();
     thisUser = Meteor.users.findOne({_id: this.userId});
-    if (thisUser.profile.friends.indexOf(_addedTo) === -1)
+    if (thisUser.profile.friends.indexOf(_addedTo) === -1 && thisUser._id != _addedTo)
       return "you're not friends with this person";
     _addedBy = this.userId;
     addedQuote = Quotes.insert({text: _text, timestamp: _timestamp, addedBy: _addedBy, addedTo: _addedTo, timestamp: _timestamp});
     Meteor.users.update({_id: _addedTo}, {$addToSet: {'profile.quotes': addedQuote}});
     Meteor.users.update({_id: this.userId}, {$addToSet: {'profile.addedQuotes': addedQuote}});
+    
+    //increment unread
+    Meteor.users.update({_id: {$in: thisUser.profile.friends}}, {$inc: {'profile.unread': 1}}, {multi: true});
     return addedQuote;
   },
   sendFriendRequest: function(_username){

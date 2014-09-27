@@ -1,11 +1,13 @@
 <head>
-  <title>quotable</title>
+<meta name = "viewport" content = "user-scalable=no, width=device-width">
+<title>quotable</title>
 </head>
 
 <body>
 {{> headerView}}
 <div class="container">
-  <div class="content" id="content">
+  {{> sidebar}}
+  <div class="content snap-content" id="content">
     {{> home}}
   </div>
 </div>
@@ -14,7 +16,17 @@
 <template name="headerView">
 <div class="topcoat-navigation-bar">
   <div class="topcoat-navigation-bar__item center full">
-    <h1 class="topcoat-navigation-bar__title">quotable</h1>
+    <h1 class="topcoat-navigation-bar__title"><center>quotable</center></h1>
+  </div>
+  <div class="topcoat-navigation-bar__item left">
+    {{#if currentUser}}
+    <i class="fa fa-bars fa-lg"></i>
+    {{/if}}
+  </div>
+  <div class="topcoat-navigation-bar__item right">
+    {{#if currentUser}}
+    <i class="fa fa-comment fa-lg">{{#if unread}}<span class="topcoat-notification">{{unread}}</span>{{/if}}</i>
+    {{/if}}
   </div>
 </div>
 </template>
@@ -22,34 +34,51 @@
 <template name="quoteControls">
 <div id="quoteEntryDiv">
   <center>
-    <textarea id="quoteEntry" class="topcoat-textarea" rows="10" cols="22" placeholder="What did they say?"></textarea><br><br>
-</center>
+    <textarea id="quoteEntry" tabindex="1" class="topcoat-textarea" rows="10" cols="22" placeholder="What did they say?"></textarea><br><br>
+  </center>
 </div>
 <div id="quoteSubmitDiv">
   <center>
-<input type="text" id="userEntry" class="topcoat-text-input" placeholder="Type a twitter user">
+    Where did you hear it?
+    <br>
+    <br>
+    <select id="userDropdown">
+      <option value="{{thisUser}}">I overheard it<i class="fa fa-arrow-down"></i></option>
+      {{#each friends}}
+      <option value="{{services.twitter.screenName}}">{{services.twitter.screenName}}</option>
+      {{/each}}
+    </select>
   </center>
-<button class="ladda-button" data-style="expand-left" data-color="green" id="submitQuote"><span class="ladda-label" >Quote it!</span></button><br><br>
+  <button class="ladda-button" data-style="expand-left" data-color="green" id="submitQuote"><span class="ladda-label" >Quote it!</span></button><br><br>
 </div>
 </template>
 
 <template name="homeScreen">
 <div id="homeScreen">
-<center>
-<div id="menuQuoteDiv">
-  <button class="ladda-button" id="menuQuote"><span class="ladda-label">Quote</span></button><br><br>
-</div>
-<button class="topcoat-button" id="menuViewQuotes">View Quotes</button><br><br>
-<button class="topcoat-button" id="menuFriend">Add Friend</button><br><br>
-</center>
+  <center>
+    <div id="menuQuoteDiv">
+      <button class="ladda-button" id="menuQuote"><span class="ladda-label">Quote</span></button><br><br>
+    </div>
+    <button class="topcoat-button" id="menuViewQuotes">View Quotes</button><br><br>
+    <button class="topcoat-button" id="menuFriend">Add Friend</button><br><br>
+  </center>
 </div>
 </template>
 
 <template name="viewQuotesTemplate">
 <div id="viewQuotesDiv">
-<center>
-  <button class="topcoat-button" id="backToHome">Back</button>
-</center>
+  {{#each authorQuote}}
+  <div id="quote">
+    <center>"{{text}}"</center>
+  </div>
+  <br>
+  <div id="quoteAuthor">
+    <center> - {{author}}</center>
+  </div>
+  <br>
+  <br>
+  {{/each}}
+    <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="green" id="goToHomeButton"><span class="ladda-label">Back</span></button></center>
 </div>
 </template>
 
@@ -62,24 +91,71 @@
   <br>
   <br>
   <center>
-  <div id="singleQuoteDiv">
-    "{{quote.text}}"
+    <div id="singleQuoteDiv">
+      "{{quote.text}}"
+      <br>
+      <br>
+      - {{#if overheard}} overheard by {{/if}}@{{authorName}} <img src={{authorPic}} align="middle">
+    </div>
+    <br><br>
+    <a class="twitter-share-button" href="https://twitter.com/share"
+      data-related="twitterdev"
+      data-size="large"
+      data-text='"{{quote.text}}" - {{#if overheard}}overheard by {{/if}}@{{authorName}}'
+      data-count="none">
+      Tweet
+    </a>
     <br>
     <br>
-    - @{{authorName}}
-  </div>
-  <br><br>
-  <a class="twitter-share-button" href="https://twitter.com/share"
-    data-related="twitterdev"
-    data-size="large"
-    data-text='"{{quote.text}}" - {{authorName}}'
-    data-count="none">
-    Tweet
-  </a>
+    <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="green" id="goToHomeButton"><span class="ladda-label" >Back</span></button></center>
   </center>
 </div>
 </template>
 
 <template name="customLogin">
 <center><button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginButton"><span class="ladda-label" >Log in with Twitter</span></button></center><br><br><br>
+</template>
+
+<template name="sidebar">
+<div class="snap-drawers">
+  <div class="snap-drawer snap-drawer-left">
+    <div>
+      <br>
+      <center>
+        <strong> Friends </strong><br>
+        {{#each friend}}
+        {{services.twitter.screenName}}<br>
+        {{/each}}
+        <br>
+        <br>
+        <strong> Pending (tap to accept) </strong><br>
+        {{#each pending}}
+        <div id="pendingFriend">{{services.twitter.screenName}}</div>
+        {{/each}}
+        <br>
+        <br>
+        <input type="text" class="topcoat-text-input" placeholder="twitter username" id="addFriendField" value="">
+
+        <button class="ladda-button" data-style="expand-left" data-color="green" id="submitFriend"><span class="ladda-label" >Send Friend Request</span></button><br><br><br>
+      </center>
+    </div>
+  </div>
+  <div class="snap-drawer snap-drawer-right">
+    <div>
+      <br>
+      <center><h3>Recent Quotes</h3></center>
+      {{#each recentQuote}}
+      <div id="quote">
+        <center>"{{text}}"</center>
+      </div>
+        <br>
+      <div id="quoteAuthor">
+        <center> - {{author}}</center>
+      </div>
+      <br>
+      <br>
+      {{/each}}
+    </div>
+  </div>
+</div>
 </template>

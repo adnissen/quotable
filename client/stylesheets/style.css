@@ -1,7 +1,12 @@
 .content{
+  background-color: #FFF;
   position: absolute;
   top: 70px;
   width: 100%;
+}
+
+img{
+  border-radius: 50%;
 }
 
 #singleQuoteDiv{
@@ -11,7 +16,33 @@
   margin-right: 5%;
 }
 
-#submitQuote{
+option{
+  color: #000;
+}
+
+select {
+  outline-width: 0px !important;
+  outline-color: #DDD;
+  font-family: "Karla";
+  font-size: 1.3rem;
+  padding:10px;
+  margin: 0;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  border-color: #DDD;
+  background: #FFF;
+  color:#AAA;
+  border:round;
+  text-align: center;
+  outline:solid;
+  display: inline-block;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+}
+
+#goToHomeButton, #submitQuote{
   position:fixed;
   left:0px;
   bottom:0px;
@@ -30,7 +61,41 @@
   margin-bottom: 5%;
 }
 
-.topcoat-tab-bar__item {
+.fa-bars, .fa-comment{
+  color: #FFF;
+}
+
+.topcoat-navigation-bar__item.left{
+  position: absolute !important;
+  left: 3% !important;
+  top: 5% !important;
+}
+
+.topcoat-navigation-bar__item.right{
+  position: absolute !important;
+  right: 3% !important;
+  top: 5% !important;
+}
+
+.snap-drawers{
+  color: #FFF;
+  background-color: #484B4C;
+  top: 70px;
+}
+
+.topcoat-navigation-bar{
+  z-index: 2;
+}
+
+.topcoat-notification{
+  position: absolute !important;
+  left: 10px !important;
+  bottom: 20px !important;
+  font-size: 0.75rem !important;
+}
+
+.topcoat-navigation-bar__title {
+  font-size: 2.0rem !important;
 }
 
 #quoteEntryDiv{
@@ -84,7 +149,7 @@ background-color: #FFFFFF !important;
 }
 
 .topcoat-navigation-bar{
-  position: fixed;
+  position: absolute;
   width: 100%;
   background-color: #333 !important;
   box-shadow: none !important;

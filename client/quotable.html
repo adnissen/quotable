@@ -45,7 +45,7 @@
     <select id="userDropdown">
       <option value="{{thisUser}}">I overheard it<i class="fa fa-arrow-down"></i></option>
       {{#each friends}}
-      <option value="{{services.twitter.screenName}}">{{services.twitter.screenName}}</option>
+      <option value="{{username}}">{{services.twitter.screenName}}</option>
       {{/each}}
     </select>
   </center>
@@ -113,7 +113,8 @@
 </template>
 
 <template name="customLogin">
-<center><button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginButton"><span class="ladda-label" >Log in with Twitter</span></button></center><br><br><br>
+{{> loginButtons}}
+<!--<center><button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginButton"><span class="ladda-label" >Log in with Twitter</span></button></center><br><br><br>-->
 </template>
 
 <template name="sidebar">
@@ -124,13 +125,13 @@
       <center>
         <strong> Friends </strong><br>
         {{#each friend}}
-        {{services.twitter.screenName}}<br>
+        {{username}}<br>
         {{/each}}
         <br>
         <br>
         <strong> Pending (tap to accept) </strong><br>
         {{#each pending}}
-        <div id="pendingFriend">{{services.twitter.screenName}}</div>
+        <div id="pendingFriend">{{username}}</div>
         {{/each}}
         <br>
         <br>

@@ -1,19 +1,12 @@
 Meteor.startup(function () {
   // code to run on server at startup
-  ServiceConfiguration.configurations.remove({
-    service: "twitter"
-  });
-  ServiceConfiguration.configurations.insert({
-    service: "twitter",
-    consumerKey: "J0tyG0iiTvJbhpUEEZnwewOtz",
-    secret: "2k75aIzVg1bmcMOltJfpKyiav32CIqBjfBx6mSQ1mYBSYJWkMz"
-  }); 
 });
 
 Accounts.onCreateUser(function(options, user){
   if (options.profile)
     user.profile = options.profile;
-
+  else
+    user.profile = {};
   user.profile.friends = new Array();
   user.profile.friendsRequested = new Array();
   user.profile.friendRequests = new Array();
@@ -87,7 +80,7 @@ Meteor.methods({
   sendFriendRequest: function(_username){
     if (!this.userId)
       return;
-    _user = Meteor.users.findOne({'services.twitter.screenName': _username});
+    _user = Meteor.users.findOne({'username': _username});
     thisUser = Meteor.users.findOne({_id: this.userId});
     if (!_user)
       return "user does not exist"

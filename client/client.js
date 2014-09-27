@@ -1,7 +1,9 @@
 Quotes = new Mongo.Collection("quotes");
 Meteor.subscribe("userData");
 Meteor.subscribe("quotes");
-
+Accounts.ui.config({
+  passwordSignupFields: 'USERNAME_ONLY'
+});
 Meteor.startup(function(){
   currentScreen = null;
   Session.setDefault('activeQuoteMenu', false);
@@ -15,8 +17,8 @@ Template.viewQuotesTemplate.authorQuote = function(){
 
 Template.viewQuotesTemplate.author = function(){
   if (this.addedBy === this.addedTo)
-    return "overheard by " + Meteor.users.findOne({_id: this.addedTo}).services.twitter.screenName;
-  return Meteor.users.findOne({_id: this.addedTo}).services.twitter.screenName;
+    return "overheard by " + Meteor.users.findOne({_id: this.addedTo}).username;
+  return Meteor.users.findOne({_id: this.addedTo}).username;
 };
 
 Template.headerView.unread = function(){
@@ -82,15 +84,15 @@ Template.sidebar.events({
 
 Template.sidebar.author = function(){
   if (Meteor.users.findOne({_id: this.addedTo})._id == this.addedBy){
-    return "overheard by " + Meteor.users.findOne({_id: this.addedTo}).services.twitter.screenName;
+    return "overheard by " + Meteor.users.findOne({_id: this.addedTo}).username;
   }
   else
-    return Meteor.users.findOne({_id: this.addedTo}).services.twitter.screenName;
+    return Meteor.users.findOne({_id: this.addedTo}).username;
 }
 
 Template.quoteControls.thisUser = function(){
   if (Meteor.user() && Meteor.user().services){
-    return Meteor.user().services.twitter.screenName;
+    return Meteor.user().username;
   }
 }
 
@@ -104,11 +106,9 @@ Template.quoteControls.rendered = function(){
 
 Template.customLogin.events({
   'click #customLoginButton': function(){
-    Meteor.loginWithTwitter({'loginStyle': 'popup'},function(err){
     Blaze.remove(currentScreen);
     currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
-    });
-  }
+    }
 });
 
 Template.homeScreen.events({
@@ -143,7 +143,7 @@ Template.singleQuoteTemplate.quote = function(){
 };
 
 Template.singleQuoteTemplate.authorName = function(){
-  return Meteor.users.findOne({'profile.quotes': Session.get('lastQuote')}).services.twitter.screenName;
+  return Meteor.users.findOne({'profile.quotes': Session.get('lastQuote')}).username;
 }
 
 Template.singleQuoteTemplate.overheard = function(){
@@ -174,7 +174,7 @@ Template.quoteControls.events({
       submitQuoteButton.stop();
       return;
     }
-    addToUser = Meteor.users.findOne({'services.twitter.screenName': val});
+    addToUser = Meteor.users.findOne({'username': val});
     Meteor.call("addQuote", $('#quoteEntry').val(), addToUser._id, function(err, data){
       submitQuoteButton.stop();
       $('#submitQuote').addClass('animated bounceOutUp');

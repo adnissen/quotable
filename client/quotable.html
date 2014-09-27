@@ -45,7 +45,7 @@
     <select id="userDropdown">
       <option value="{{thisUser}}">I overheard it<i class="fa fa-arrow-down"></i></option>
       {{#each friends}}
-      <option value="{{username}}">{{services.twitter.screenName}}</option>
+      <option value="{{username}}">{{username}}</option>
       {{/each}}
     </select>
   </center>
@@ -113,7 +113,15 @@
 </template>
 
 <template name="customLogin">
-{{> loginButtons}}
+<center>
+  <br>
+  <input type="text" class="topcoat-text-input" placeholder="Username" id="customLoginUsername" value=""><br><br>
+  <input type="password" class="topcoat-text-input" placeholder="Password" id="customLoginPassword" value=""><br><br>
+
+  <button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginSignin"><span class="ladda-label" >Sign In</span></button><br><br>
+  <button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginCreate"><span class="ladda-label" >Create Account</span></button><br><br>
+</center>
+
 <!--<center><button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginButton"><span class="ladda-label" >Log in with Twitter</span></button></center><br><br><br>-->
 </template>
 
@@ -135,9 +143,10 @@
         {{/each}}
         <br>
         <br>
-        <input type="text" class="topcoat-text-input" placeholder="twitter username" id="addFriendField" value="">
+        <input type="text" class="topcoat-text-input" placeholder="Username" id="addFriendField" value="">
 
         <button class="ladda-button" data-style="expand-left" data-color="green" id="submitFriend"><span class="ladda-label" >Send Friend Request</span></button><br><br><br>
+        <button class="ladda-button" data-style="expand-left" data-color="green" id="logOut"><span class="ladda-label" >Log Out</span></button><br><br><br>
       </center>
     </div>
   </div>

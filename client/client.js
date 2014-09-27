@@ -78,7 +78,11 @@ Template.sidebar.events({
     if (currentScreen)
       Blaze.remove(currentScreen);
     currentScreen = Blaze.render(Template.viewQuotesTemplate, document.getElementById('content'));
-
+  },
+  'click #logOut': function(){
+    Meteor.logout();
+    snapper.close();
+    snapper = null;
   }
 });
 
@@ -105,10 +109,31 @@ Template.quoteControls.rendered = function(){
 };
 
 Template.customLogin.events({
-  'click #customLoginButton': function(){
-    Blaze.remove(currentScreen);
-    currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+  'click #customLoginSignin': function(){
+    if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
+      Meteor.loginWithPassword($('#customLoginUsername').val(), $('#customLoginPassword').val(), function(err){
+        if (Meteor.user()){
+          Blaze.remove(currentScreen);
+          currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+        }
+      });
     }
+  },
+
+  'click #customLoginCreate': function(){
+    if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
+      Accounts.createUser({username: $('#customLoginUsername').val(), password: $('#customLoginPassword').val()}, function(err){
+        if (err)
+        return;
+      Meteor.loginWithPassword($('#customLoginUsername').val(), $('#customLoginPassword').val(), function(err){
+        if (Meteor.user()){
+          Blaze.remove(currentScreen);
+          currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+        }
+      });
+      });
+    }
+  }
 });
 
 Template.homeScreen.events({

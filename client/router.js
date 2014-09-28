@@ -7,15 +7,30 @@ Router.map(function(){
         snapper = new Snap({
           element: document.getElementById('content')
         });
+        $('#rewards').empty();
+        sessionmWidget = null;
+        sessionmWidget = new sessionm.widget({
+          appID: "00ec7acf906494ef63850c802536a29c4c4f042f",
+          style: "box"
+        });
+        sessionmWidget.embed('rewards');
         Meteor.subscribe("quotes");
         Meteor.call("getUnreadTotal");
         $('body').mousedown(function(){
-          if (snapper.state().state=="right")
+          if (snapper.state().state=="right"){
+            sessionmWidget.sendAction('view_recent', function(action, earned, achievement){
+              console.log(action + " recorded"); // Outputs read_article recorded
+            });
             Meteor.call('clearUnread');
+          }
         });
         $('body').bind( "touchend", function(e){
-          if (snapper.state().state=="right")
+          if (snapper.state().state=="right"){
+            sessionmWidget.sendAction('view_recent', function(action, earned, achievement){
+              console.log(action + " recorded"); // Outputs read_article recorded
+            });
             Meteor.call('clearUnread');
+          }
         });
         if (currentScreen)
           Blaze.remove(currentScreen);

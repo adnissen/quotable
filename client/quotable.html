@@ -16,6 +16,7 @@
 <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<script src="http://mobile-content.sessionm.com/javascripts/api/sessionm.js" type="text/javascript"></script>
 <title>quotable</title>
 </head>
 
@@ -24,7 +25,6 @@
 <div class="container">
   {{> sidebar}}
   <div class="content snap-content" id="content">
-    {{> home}}
   </div>
 </div>
 </body>
@@ -111,7 +111,7 @@
       "{{quote.text}}"
       <br>
       <br>
-      - {{#if overheard}} overheard by {{/if}}@{{authorName}} <img src={{authorPic}} align="middle">
+      - {{#if overheard}} overheard by {{/if}}@{{authorName}}
     </div>
     <br><br>
     <a class="twitter-share-button" href="https://twitter.com/share"
@@ -130,6 +130,26 @@
 
 <template name="customLogin">
 <center>
+<br>
+<img src="apple-touch-icon-76x76.png">
+</center>
+{{#if loggingIn}}
+<center>
+<h3>I'm running around trying to find your quotes. I know they're around here somewhere, give me a second to load them in.</h3>
+</center>
+{{/if}}
+{{#unless loggingIn}}
+<center>
+<br>
+<h3>Welcome to the ALPHA test of quotable! Native apps are in progress (and very very close), but for now if you're on iOS you should add this page to your homescreen by tapping the arrow at the bottom and hitting 'add to homescreen.' That way you'll never be more than a touch away from quotable!</h3>
+<p>
+This is quotable, a way to keep track of funny things your friends have said or you've overheard. It's designed with time-to-quote in mind, so entering quotes is quick and painless. To get started, you're going to need an account, which you can create below. Once inside, try adding some of your friends by opening the menu to the left, or just get quoting right away! Once you have some friends, swipe right to see their recent quotes. It's that easy! And feel free to add myself, my username is quite simply 'andrew'.
+
+<br>
+I hope you enjoy quotable!
+</p>
+</center>
+<center>
   <br>
   <input type="text" class="topcoat-text-input" placeholder="Username" id="customLoginUsername" value=""><br><br>
   <input type="password" class="topcoat-text-input" placeholder="Password" id="customLoginPassword" value=""><br><br>
@@ -137,8 +157,7 @@
   <button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginSignin"><span class="ladda-label" >Sign In</span></button><br><br>
   <button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginCreate"><span class="ladda-label" >Create Account</span></button><br><br>
 </center>
-
-<!--<center><button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginButton"><span class="ladda-label" >Log in with Twitter</span></button></center><br><br><br>-->
+  {{/unless}}
 </template>
 
 <template name="sidebar">
@@ -162,7 +181,9 @@
         <input type="text" class="topcoat-text-input" placeholder="Username" id="addFriendField" value="">
 
         <button class="ladda-button" data-style="expand-left" data-color="green" id="submitFriend"><span class="ladda-label" >Send Friend Request</span></button><br><br><br>
+        <div id="rewards"></div><br><br><br>
         <button class="ladda-button" data-style="expand-left" data-color="green" id="logOut"><span class="ladda-label" >Log Out</span></button><br><br><br>
+
       </center>
     </div>
   </div>

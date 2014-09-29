@@ -37,6 +37,14 @@ select {
   appearance:none;
 }
 
+#goToHomeButtonViewQuotes{
+   position: relative;
+   left: 0px;
+   height: 60px;
+   width: 100%;
+   font-family: "KarlaBold" !important;
+}
+
 @media (min-height: 480px){
   #goToHomeButton, #submitQuote{
     position:fixed;
@@ -46,10 +54,12 @@ select {
     width:100%;
     font-family: "KarlaBold" !important;
   }
+  
 }
 @media (max-height: 479px){
   #goToHomeButton, #submitQuote{
     position:absolute;
+    left: 0px;
     top: 380px;
     height:60px;
     width:100%;

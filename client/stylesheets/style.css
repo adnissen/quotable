@@ -37,13 +37,24 @@ select {
   appearance:none;
 }
 
-#goToHomeButton, #submitQuote{
-  position:fixed;
-  left:0px;
-  bottom:0px;
-  height:60px;
-  width:100%;
-  font-family: "KarlaBold" !important;
+@media (min-height: 480px){
+  #goToHomeButton, #submitQuote{
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    height:60px;
+    width:100%;
+    font-family: "KarlaBold" !important;
+  }
+}
+@media (max-height: 479px){
+  #goToHomeButton, #submitQuote{
+    position:absolute;
+    top: 380px;
+    height:60px;
+    width:100%;
+    font-family: "KarlaBold" !important;
+  }
 }
 #quoteEntry{
   display: none;

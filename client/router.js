@@ -67,11 +67,12 @@ Router.map(function(){
       }
       if (currentScreen)
         Blaze.remove(currentScreen);
-      Meteor.subscribe("quotes");
+      Meteor.subscribe("quotes", this.params._id);
+      console.log(this.params._id);
       currentScreen = Blaze.render(Template.singleQuoteTemplate, document.getElementById('content'));
     },
     waitOn: function(){
-      return Meteor.subscribe('quotes');
+      return Meteor.subscribe('quotes', this.params._id);
     }
   });
 });

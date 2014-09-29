@@ -7,6 +7,7 @@ Accounts.onCreateUser(function(options, user){
     user.profile = options.profile;
   else
     user.profile = {};
+  user.username = user.username.toLowerCase();
   user.profile.friends = new Array();
   user.profile.friendsRequested = new Array();
   user.profile.friendRequests = new Array();
@@ -27,18 +28,42 @@ Accounts.onCreateUser(function(options, user){
  */
 
 Quotes = new Mongo.Collection('quotes');
+Quotes.allow({
+  insert: function(){
+    return false;
+  },
+  update: function(){
+   return false;
+  },
+  remove: function(){
+    return false;
+  }
+});
+
+Meteor.users.allow({
+  insert: function(){
+    return false;
+  },
+  update: function(){
+   return false;
+  },
+  remove: function(){
+    return false;
+  }
+});
 
 Meteor.publish("userData", function(){
-  if (this.userId)
-    return Meteor.users.find({});
+  return Meteor.users.find({});
     //return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
 });
 
-Meteor.publish("quotes", function(){
+Meteor.publish("quotes", function(id){
   if (this.userId){
     user = Meteor.users.findOne({_id: this.userId});
-    return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}]});
+    return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}, {_id: id}]});
   }
+  else
+    return Quotes.find({_id: id});  
 });
 
 

@@ -1,5 +1,6 @@
 <head>
 <meta name = "viewport" content = "user-scalable=no, width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
 <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
 <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
@@ -36,7 +37,7 @@
   </div>
   <div class="topcoat-navigation-bar__item left">
     {{#if currentUser}}
-    <i class="fa fa-bars fa-lg"></i>
+    <i class="fa fa-bars fa-lg">{{#if pendingFriends}}<span class="topcoat-notification">{{pendingFriends}}</span>{{/if}}</i>
     {{/if}}
   </div>
   <div class="topcoat-navigation-bar__item right">
@@ -112,6 +113,8 @@
       <br>
       <br>
       - {{#if overheard}} overheard by {{/if}}@{{authorName}}
+      <br>
+      {{time}}
     </div>
     <br><br>
     <a class="twitter-share-button" href="https://twitter.com/share"
@@ -130,6 +133,8 @@
 
 <template name="customLogin">
 <center>
+  <br>
+  Tap the icon to install quotable to your homescreen!
 <br>
 <img src="apple-touch-icon-76x76.png">
 </center>
@@ -151,8 +156,8 @@ I hope you enjoy quotable!
 </center>
 <center>
   <br>
-  <input type="text" class="topcoat-text-input" placeholder="Username" id="customLoginUsername" value=""><br><br>
-  <input type="password" class="topcoat-text-input" placeholder="Password" id="customLoginPassword" value=""><br><br>
+  <input type="text" class="topcoat-text-input" placeholder="Pick a Username" id="customLoginUsername" value=""><br><br>
+  <input type="password" class="topcoat-text-input" placeholder="Choose a Password" id="customLoginPassword" value=""><br><br>
 
   <button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginSignin"><span class="ladda-label" >Sign In</span></button><br><br>
   <button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginCreate"><span class="ladda-label" >Create Account</span></button><br><br>
@@ -168,7 +173,9 @@ I hope you enjoy quotable!
       <center>
         <strong> Friends </strong><br>
         {{#each friend}}
-        {{username}}<br>
+        <div id="quoteAuthor">
+        {{username}}<br><br>
+        </div>
         {{/each}}
         <br>
         <br>
@@ -197,7 +204,7 @@ I hope you enjoy quotable!
       </div>
         <br>
       <div id="quoteAuthor">
-        <center> - {{author}}</center>
+        <center> - {{author}} {{time}}</center>
       </div>
       <br>
       <br>

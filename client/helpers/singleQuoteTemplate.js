@@ -3,7 +3,7 @@ Template.singleQuoteTemplate.quote = function(){
 };
 
 Template.singleQuoteTemplate.time = function(){
-  return moment.unix(Quotes.findOne({_id: Session.get('lastQuote')}).timestamp).format('dddd, MMMM Do');
+  return moment(Quotes.findOne({_id: Session.get('lastQuote')}).timestamp).format('dddd, MMMM Do');
 };
 
 Template.singleQuoteTemplate.authorName = function(){

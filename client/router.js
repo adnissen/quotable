@@ -7,6 +7,10 @@ Router.map(function(){
         snapper = new Snap({
           element: document.getElementById('content')
         });
+        window.onscroll = function () {
+          if (snapper.state().state == 'left' && scrollX >= 50)
+            snapper.close();
+        }
         $('#rewards').empty();
         sessionmWidget = null;
         sessionmWidget = new sessionm.widget({

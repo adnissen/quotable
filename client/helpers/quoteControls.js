@@ -8,7 +8,6 @@ Template.quoteControls.rendered = function(){
   $('#quoteEntry').show();
   $('#userEntry').addClass('animated fadeIn');
   $('#quoteEntry').addClass('animated fadeIn');
-  $('#submitQuote').addClass('animated bounceInDown');
   $('#userEntry').addClass('animated fadeIn');
 };
 
@@ -41,7 +40,6 @@ Template.quoteControls.events({
         });
       }
       submitQuoteButton.stop();
-      $('#submitQuote').addClass('animated bounceOutUp');
       $('#quoteEntry').addClass('animated fadeOut');
       $('#userEntry').addClass('animated fadeOut');
       $('#submitQuote').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){

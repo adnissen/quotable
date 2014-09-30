@@ -21,7 +21,7 @@ Template.sidebar.author = function(){
 }
 
 Template.sidebar.time = function(){
-  return moment.unix(this.timestamp).format('dddd, MMMM Do');
+  return moment(this.timestamp).format('dddd, MMMM Do');
 }
 
 Template.sidebar.events({

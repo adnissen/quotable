@@ -47,7 +47,7 @@ select {
 
 @media (min-height: 480px){
   #goToHomeButton, #submitQuote{
-    position:fixed;
+    position:absolute;
     left:0px;
     bottom:0px;
     height:60px;
@@ -100,6 +100,7 @@ select {
 }
 
 .topcoat-navigation-bar{
+  overflow: none;
   z-index: 2;
 }
 

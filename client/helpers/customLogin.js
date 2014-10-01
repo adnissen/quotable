@@ -1,3 +1,9 @@
+Template.customLogin.quotesTotal = function(){
+  Meteor.call('getQuotesTotal', function(e, d){
+    Session.set('quotesTotal', d);
+  });
+  return Session.get('quotesTotal');
+}
 Template.customLogin.events({
   'click #customLoginSignin': function(){
     if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){

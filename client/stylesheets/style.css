@@ -85,12 +85,14 @@ select {
   position: absolute !important;
   left: 3% !important;
   top: 5% !important;
+  z-index: 1000 !important;
 }
 
 .topcoat-navigation-bar__item.right{
   position: absolute !important;
   right: 3% !important;
   top: 5% !important;
+  z-index: 1000 !important;
 }
 
 .snap-drawers{

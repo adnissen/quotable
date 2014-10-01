@@ -57,9 +57,6 @@ ga('send', 'pageview');
 
 <template name="headerView">
 <div class="topcoat-navigation-bar">
-  <div class="topcoat-navigation-bar__item center full">
-    <h1 class="topcoat-navigation-bar__title"><center>quotable</center></h1>
-  </div>
   <div class="topcoat-navigation-bar__item left">
     {{#if currentUser}}
     <i class="fa fa-bars fa-lg">{{#if pendingFriends}}<span class="topcoat-notification">{{pendingFriends}}</span>{{/if}}</i>
@@ -69,6 +66,9 @@ ga('send', 'pageview');
     {{#if currentUser}}
     <i class="fa fa-comment fa-lg">{{#if unread}}<span class="topcoat-notification">{{unread}}</span>{{/if}}</i>
     {{/if}}
+  </div>
+  <div class="topcoat-navigation-bar__item center full">
+    <h1 class="topcoat-navigation-bar__title"><center>quotable</center></h1>
   </div>
 </div>
 </template>
@@ -193,6 +193,7 @@ This is quotable, an app that makes sure you never forget something hilarious yo
 </center>
   {{/unless}}
   <center>
+    <p>{{quotesTotal}} quotes and rising!</p>
     <p>Need to contact me? I'm <a href="http://twitter.com/ambushsabre">@ambushsabre</a> on twitter, or you can email me at <a href="mailto:andrew_nissen@Yahoo.com">andrew_nissen@yahoo.com</a></p>
   </center>
 </template>
@@ -211,7 +212,7 @@ This is quotable, an app that makes sure you never forget something hilarious yo
         {{/each}}
         <br>
         <br>
-        <strong> Pending (tap to accept) </strong><br>
+        <strong> Pending (tap to accept) </strong><br><br>
         {{#each pending}}
         <div id="pendingFriend">{{username}}</div>
         {{/each}}

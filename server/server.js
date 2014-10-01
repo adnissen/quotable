@@ -68,6 +68,9 @@ Meteor.publish("quotes", function(id){
 
 
 Meteor.methods({
+  getQuotesTotal: function(){
+    return Quotes.find().count() + 2000;
+  },
   getUnreadTotal: function(){
     if (!this.userId)
       return "not logged in";

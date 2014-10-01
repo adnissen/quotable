@@ -105,6 +105,12 @@ Meteor.methods({
     Meteor.users.update({_id: {$in: thisUser.profile.friends}}, {$inc: {'profile.unread': 1}}, {multi: true});
     return addedQuote;
   },
+  removeFriend: function(friendId){
+    if (!this.userId)
+      return;
+    Meteor.users.update({_id: this.userId}, {$pull: {'profile.friends': friendId}});
+    Meteor.users.update({_id: friendId}, {$pull: {'profile.friends': this.userId}});
+  },
   removeQuote: function(quoteId){
     if (!this.userId)
       return;

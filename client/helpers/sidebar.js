@@ -37,6 +37,9 @@ Template.sidebar.events({
     Meteor.subscribe("userData");
     Meteor.call("acceptFriendRequest", this._id);
   },
+  'click .fa-trash': function(){
+    console.log('rip friend');
+  },
   'click #quote': function(){
     snapper.close();
     Router.go('/quotes/' + this._id);

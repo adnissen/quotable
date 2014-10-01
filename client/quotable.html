@@ -113,13 +113,14 @@ ga('send', 'pageview');
   <div id="quote">
     <center>"{{text}}"</center>
   </div>
-  <br>
   <div id="quoteAuthor">
     <center> - {{author}}</center>
   </div>
   <br>
   <br>
   {{/each}}
+
+    <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="red" id="removeFriendButton"><span class="ladda-label">Remove Friend</span></button></center>
     <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="green" id="goToHomeButton"><span class="ladda-label">Back</span></button></center>
 </div>
 </template>
@@ -207,7 +208,7 @@ This is quotable, an app that makes sure you never forget something hilarious yo
         <strong> Friends </strong><br>
         {{#each friend}}
         <div id="quoteAuthor">
-        {{username}}<br><br>
+          {{username}}<br><br>
         </div>
         {{/each}}
         <br>

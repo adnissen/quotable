@@ -162,11 +162,6 @@ ga('send', 'pageview');
 <center>
   <br>
   <div id="addToHomeScreenButton">
-  <script>
-  if (!window.navigator.standalone){
-    $('#addToHomeScreenButton').append("Tap the icon to install quotable to your homescreen!");
-  }
-  </script>
   </div>
   <br>
   <img src="apple-touch-icon-76x76.png">
@@ -223,6 +218,13 @@ This is quotable, an app that makes sure you never forget something hilarious yo
         <input type="text" class="topcoat-text-input" placeholder="Username" id="addFriendField" value="">
 
         <button class="ladda-button" data-style="expand-left" data-color="green" id="submitFriend"><span class="ladda-label" >Send Friend Request</span></button><br><br><br>
+
+        <input type="text" class="topcoat-text-input" placeholder="Email" id="inviteFriendField" value="">
+
+        <button class="ladda-button" data-style="expand-left" data-color="green" id="inviteFriend"><span class="ladda-label" >Invite Friend to Quotable</span></button><br><br><br>
+
+
+
         <div id="rewards"></div><br><br><br>
         <button class="ladda-button" data-style="expand-left" data-color="green" id="logOut"><span class="ladda-label" >Log Out</span></button><br><br><br>
 

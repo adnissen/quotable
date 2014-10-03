@@ -33,12 +33,15 @@ Template.sidebar.events({
     });
     $('#addFriendField').val('');
   },
+  'click #inviteFriend':function(){
+    if ($('#inviteFriendField').val() != ''){
+      Meteor.call('sendInviteEmail', $('#inviteFriendField').val());
+      $('#inviteFriendField').val('');
+    }
+  },
   'click #pendingFriend': function(){
     Meteor.subscribe("userData");
     Meteor.call("acceptFriendRequest", this._id);
-  },
-  'click .fa-trash': function(){
-    console.log('rip friend');
   },
   'click #quote': function(){
     snapper.close();

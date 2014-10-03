@@ -37,6 +37,10 @@ select {
   appearance:none;
 }
 
+#submitFriend, #inviteFriendField, #logOut{
+  z-index: 2;
+}
+
 #goToHomeButtonViewQuotes{
    position: relative;
    left: 0px;

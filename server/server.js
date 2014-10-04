@@ -81,7 +81,7 @@ Meteor.methods({
     var to = email;
     var from = 'invites@quotable.meteor.com';
     var subject = "You've been invited to quotable!";
-    var text = "Hi! You've been invited by " + thisUser.username + " to try out quotable, an app that lets you remember and share funny things you and your friends say or overhear.\n\nTo get started, all you need to do is visit <a href=http://quotable.meteor.com>quotable.meteor.com</a> and sign up! It's totally free, and we won't ever ask for any more personal information than a username and email. To add your friend, simply open the left menu and add " + thisUser.username + " as a friend. That's it!\n\n\nWe hope you enjoy your time with quotable!\n-The quotable Team.";
+    var text = "Hi! You've been invited by " + thisUser.username + " to try out quotable, an app that lets you remember and share funny things you and your friends say or overhear.\n\nTo get started, all you need to do is visit http://quotable.meteor.com>quotable.meteor.com and sign up! It's totally free, and we won't ever ask for any more personal information than a username and email. To add your friend, simply open the left menu and add " + thisUser.username + " as a friend. That's it!\n\n\nWe hope you enjoy your time with quotable!\n-The quotable Team.";
     Email.send({to:to, from:from, subject:subject, text:text});
   },
   getQuotesTotal: function(){

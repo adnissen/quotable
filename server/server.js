@@ -66,7 +66,7 @@ Meteor.publish("quotes", function(id){
     return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}, {_id: id}]});
   }
   else
-    return Quotes.find({_id: id});  
+    return Quotes.find({});
 });
 
 

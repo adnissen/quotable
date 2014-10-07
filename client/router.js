@@ -73,6 +73,7 @@ Router.map(function(){
         Blaze.remove(currentScreen);
       Meteor.subscribe("quotes", this.params._id);
       console.log(this.params._id);
+      Session.set('lastQuote', this.params._id);
       currentScreen = Blaze.render(Template.singleQuoteTemplate, document.getElementById('content'));
     },
     waitOn: function(){

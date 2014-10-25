@@ -54,12 +54,10 @@ html, body {
 
 .snap-drawer-left {
   left: 0;
-  z-index: 1;
 }
 
 .snap-drawer-right {
   right: 0;
-  z-index: 1;
 }
 
 .snapjs-left .snap-drawer-right,

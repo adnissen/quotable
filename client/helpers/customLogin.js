@@ -4,13 +4,13 @@ Template.customLogin.quotesTotal = function(){
   });
   return Session.get('quotesTotal');
 }
+
 Template.customLogin.events({
   'click #customLoginSignin': function(){
     if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
       Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
         if (Meteor.user()){
-          Blaze.remove(currentScreen);
-          currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+          Router.go('/');
         }
       });
     }
@@ -23,8 +23,7 @@ Template.customLogin.events({
         return;
       Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
         if (Meteor.user()){
-          Blaze.remove(currentScreen);
-          currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+          Router.go('/');
         }
       });
       });

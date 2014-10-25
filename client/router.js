@@ -2,22 +2,30 @@ Router.map(function(){
   this.route('home', {
     path: '/',
     action: function(){
-      if (Meteor.user()){
+      if (Meteor.user() || Meteor.loggingIn()){
+        console.log('we have a user');
         //add snapper
         snapper = new Snap({
-          element: document.getElementById('content')
+          element: document.getElementById('content'),
+          touchToDrag: true
         });
         window.onscroll = function () {
           if (snapper.state().state == 'left' && scrollX >= 50)
             snapper.close();
         }
-        $('#rewards').empty();
+        if (Meteor.isCordova){
+          if (device.platform == 'Android') var apiKey = "935dd074afdbe63752a617d98e9de9694f0b8fde";
+          else if (device.platform == 'iOS') var apiKey = "ba077e6d6aa0bda8cdb039e7a5d46b06ed4648a2";
+        }
+        else
+          var apiKey = "00ec7acf906494ef63850c802536a29c4c4f042f";
+        $('rewards').empty();
         sessionmWidget = null;
         sessionmWidget = new sessionm.widget({
-          appID: "00ec7acf906494ef63850c802536a29c4c4f042f",
+          appID: apiKey,
           style: "box"
         });
-        sessionmWidget.embed('rewards');
+        //sessionmWidget.embed('rewards');
         Meteor.subscribe("quotes");
         Meteor.call("getUnreadTotal");
         $('body').mousedown(function(){
@@ -36,14 +44,17 @@ Router.map(function(){
             Meteor.call('clearUnread');
           }
         });
+        console.log("going to start rendering");
         if (currentScreen)
           Blaze.remove(currentScreen);
         currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
-      }
-      else{
+      } else{
         if (currentScreen)
           Blaze.remove(currentScreen);
-        currentScreen = Blaze.render(Template.customLogin, document.getElementById('content'));
+        if (Meteor.user())
+          currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+        else
+          currentScreen = Blaze.render(Template.customLogin, document.getElementById('content'));
       }
     }
   });

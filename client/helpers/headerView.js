@@ -12,8 +12,12 @@ Template.headerView.events({
   'click .fa-comment': function(){
     if (snapper.state().state=="right" || snapper.state().state == "left" ){
       snapper.close();
+      $('.snap-drawer-right').show();
+      $('.snap-drawer-left').show();
     } else {
       snapper.open('right');
+      $('.snap-drawer-right').show();
+      $('.snap-drawer-left').hide();
       Meteor.call('clearUnread');
     }
   },
@@ -21,8 +25,12 @@ Template.headerView.events({
   'click .fa-bars': function(){
     if (snapper.state().state == 'right' || snapper.state().state =='left'){
       snapper.close();
+      $('.snap-drawer-left').show();
+      $('.snap-drawer-right').show();
     } else {
       snapper.open('left');
+      $('.snap-drawer-left').show();
+      $('.snap-drawer-right').hide();
     }
   }
 });

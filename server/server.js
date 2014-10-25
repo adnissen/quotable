@@ -14,6 +14,7 @@ Accounts.onCreateUser(function(options, user){
   user.profile.blocked = new Array();
   user.profile.quotes = new Array();
   user.profile.addedQuotes = new Array();
+  user.profile.seenWelcome = false;
 
   return user;
 });
@@ -71,6 +72,9 @@ Meteor.publish("quotes", function(id){
 
 
 Meteor.methods({
+  seenWelcome: function(){
+    Meteor.users.update({_id: this.userId}, {$set: {'profile.seenWelcome': true}});
+  },
   sendInviteEmail: function(email){
     if (!this.userId)
       return;
@@ -119,7 +123,7 @@ Meteor.methods({
     
     //increment unread
     Meteor.users.update({_id: {$in: thisUser.profile.friends}}, {$inc: {'profile.unread': 1}}, {multi: true});
-    return addedQuote;
+    return addedQuote._id;
   },
   removeFriend: function(friendId){
     if (!this.userId)

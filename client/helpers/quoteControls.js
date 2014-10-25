@@ -1,22 +1,22 @@
-Template.quoteControls.thisUser = function(){
-  if (Meteor.user() && Meteor.user().services){
-    return Meteor.user().username;
+Template.quoteControls.helpers({
+  thisUser: function(){
+    if (Meteor.user() && Meteor.user().services){
+      return Meteor.user().username;
+    }
+  },
+  friends: function(){
+    if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.friends){
+      return Meteor.users.find({_id: {$in: Meteor.user().profile.friends}});
+    }
   }
-}
-
+});
 Template.quoteControls.rendered = function(){
   $('#quoteEntry').show();
-  $('#userEntry').addClass('animated fadeIn');
-  $('#quoteEntry').addClass('animated fadeIn');
-  $('#userEntry').addClass('animated fadeIn');
-};
-
-Template.quoteControls.friends = function(){
-  if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.friends){
-    return Meteor.users.find({_id: {$in: Meteor.user().profile.friends}});
+  if (Meteor.user().profile.friends.length <= 0 && (Meteor.user().profile.seenWelcome == false || Meteor.user().profile.seenWelcome == undefined)){
+    swal("Hello!", "Welcome to quotable! Swipe right to see recent quotes, but there won't be any because you don't have any friends! Swipe left to add or invite friends. Until you do, only your own quotes will show up under Recent Quotes. Start quoting the world around you!");
+    Meteor.call('seenWelcome');
   }
 };
-
 
 Template.quoteControls.events({
   'click #submitQuote': function(){
@@ -40,12 +40,13 @@ Template.quoteControls.events({
         });
       }
       submitQuoteButton.stop();
-      $('#quoteEntry').addClass('animated fadeOut');
+      swal("Nice!", "Quote Added!", "success")
+      /*$('#quoteEntry').addClass('animated fadeOut');
       $('#userEntry').addClass('animated fadeOut');
       $('#submitQuote').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
         Session.set('lastQuote', data);
         Router.go('/quotes/' + Session.get('lastQuote'));
-      });
+      });*/
     });
     return;
   }

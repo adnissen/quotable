@@ -1,28 +1,26 @@
-Template.sidebar.recentQuote = function(){
-  return Quotes.find({}, {sort: {timestamp: -1}, limit: 20});
-}
-
-Template.sidebar.friend = function(){
-  if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.friends)
-    return Meteor.users.find({_id: {$in: Meteor.user().profile.friends}});
-}
-
-Template.sidebar.pending = function(){
-  if (Meteor.user() && Meteor.user().profile)
+Template.sidebar.helpers({
+  recentQuote: function(){
+    return Quotes.find({}, {sort: {timestamp: -1}, limit: 20});
+  },
+  friend: function(){
+    if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.friends)
+      return Meteor.users.find({_id: {$in: Meteor.user().profile.friends}});
+  }, 
+  pending: function(){
+   if (Meteor.user() && Meteor.user().profile)
     return Meteor.users.find({_id:{$in: Meteor.user().profile.friendRequests}});
-}
-
-Template.sidebar.author = function(){
-  if (Meteor.users.findOne({_id: this.addedTo})._id == this.addedBy){
-    return "overheard by " + Meteor.users.findOne({_id: this.addedTo}).username;
+  },
+  author: function(){
+    if (Meteor.users.findOne({_id: this.addedTo})._id == this.addedBy){
+      return "overheard by " + Meteor.users.findOne({_id: this.addedTo}).username;
+    }
+    else
+  return Meteor.users.findOne({_id: this.addedTo}).username;
+  },
+  time: function(){
+    return moment(this.timestamp).format('dddd, MMMM Do');
   }
-  else
-    return Meteor.users.findOne({_id: this.addedTo}).username;
-}
-
-Template.sidebar.time = function(){
-  return moment(this.timestamp).format('dddd, MMMM Do');
-}
+});
 
 Template.sidebar.events({
   'click #submitFriend': function(){

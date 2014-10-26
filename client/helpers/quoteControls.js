@@ -13,7 +13,7 @@ Template.quoteControls.helpers({
 Template.quoteControls.rendered = function(){
   $('#quoteEntry').show();
   if (Meteor.user().profile.friends.length <= 0 && (Meteor.user().profile.seenWelcome == false || Meteor.user().profile.seenWelcome == undefined)){
-    swal("Hello!", "Welcome to quotable! Swipe right to see recent quotes, but there won't be any because you don't have any friends! Swipe left to add or invite friends. Until you do, only your own quotes will show up under Recent Quotes. Start quoting the world around you!");
+    swal("Hello!", "Welcome to quotable! Tap the icon on the right to see recent quotes, but there won't be any because you don't have any friends! Tap the icon on the left to add or invite friends. Until you do, only your own quotes will show up under Recent Quotes. Start quoting the world around you!");
     Meteor.call('seenWelcome');
   }
 };

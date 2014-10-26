@@ -7,7 +7,15 @@ Router.map(function(){
         //add snapper
         snapper = new Snap({
           element: document.getElementById('content'),
-          touchToDrag: true
+          touchToDrag: false
+        });
+        snapper.on('expandLeft', function(){
+          $('.snap-drawer-right').hide();
+          $('.snap-drawer-left').show();
+        });
+        snapper.on('expandRight', function(){
+          $('.snap-drawer-left').hide();
+          $('.snap-drawer-right').show();
         });
         window.onscroll = function () {
           if (snapper.state().state == 'left' && scrollX >= 50)

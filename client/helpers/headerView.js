@@ -9,11 +9,9 @@ Template.headerView.pendingFriends = function(){
 };
 
 Template.headerView.events({
-  'click .fa-comment': function(){
+  'click .topcoat-navigation-bar__item.right': function(){
     if (snapper.state().state=="right" || snapper.state().state == "left" ){
       snapper.close();
-      $('.snap-drawer-right').show();
-      $('.snap-drawer-left').show();
     } else {
       snapper.open('right');
       $('.snap-drawer-right').show();
@@ -22,11 +20,9 @@ Template.headerView.events({
     }
   },
 
-  'click .fa-bars': function(){
+  'click .topcoat-navigation-bar__item.left': function(){
     if (snapper.state().state == 'right' || snapper.state().state =='left'){
       snapper.close();
-      $('.snap-drawer-left').show();
-      $('.snap-drawer-right').show();
     } else {
       snapper.open('left');
       $('.snap-drawer-left').show();

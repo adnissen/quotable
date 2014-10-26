@@ -23,6 +23,13 @@ Template.sidebar.helpers({
 });
 
 Template.sidebar.events({
+  'click #myQuotes': function(){
+    snapper.close();
+    Session.set('author', Meteor.userId());
+    if (currentScreen)
+      Blaze.remove(currentScreen);
+    currentScreen = Blaze.render(Template.viewQuotesTemplate, document.getElementById('content'));
+  },
   'click #submitFriend': function(){
     Meteor.call("sendFriendRequest", $('#addFriendField').val().toLowerCase(), function(err, data){
       sessionmWidget.sendAction('add_friend', function(action, earned, achievement){

@@ -56,18 +56,35 @@ Meteor.users.allow({
 //we need to store email addresses so that you can't spam multiple emails
 Emails = new Mongo.Collection('emails');
 
-Meteor.publish("userData", function(){
-  return Meteor.users.find({});
-    //return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
+Meteor.publish("userData", function(id){
+  check(id, Match.Any);
+  /*
+  if (this.userId){
+    if (id != undefined){
+      quote = Quotes.findOne({_id: id});
+      return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}, {_id: quote.addedTo}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
+    }
+    else{
+      return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
+    }
+  }
+  else{
+    quote = Quotes.findOne({_id: id});
+    return Meteor.users.find({_id: quote.addedTo});
+  }*/
+  return Meteor.users.find();
 });
 
 Meteor.publish("quotes", function(id){
+  //bad practice, but a bunch of subs don't need the id param so we need to do it this way
+  check(id, Match.Any);
   if (this.userId){
     user = Meteor.users.findOne({_id: this.userId});
     return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}, {_id: id}]});
   }
-  else
-    return Quotes.find({});
+  else{
+    return Quotes.find({_id: id});
+  }
 });
 
 
@@ -78,7 +95,7 @@ Meteor.methods({
   sendInviteEmail: function(email){
     if (!this.userId)
       return;
-    check([email], [String]);
+    check(email, String);
     this.unblock();
 
     var thisUser = Meteor.users.findOne({_id: this.userId});
@@ -143,6 +160,7 @@ Meteor.methods({
       return;
   },
   sendFriendRequest: function(_username){
+    check(_username, String);
     if (!this.userId)
       return;
     _user = Meteor.users.findOne({'username': _username});

@@ -68,9 +68,6 @@ Router.map(function(){
   });
   this.route('singleQuoteTemplate', {
     path: '/quotes/:_id',
-    data: function(){
-      return Session.set('lastQuote', this.params._id);
-    },
     action: function(){
       if (Meteor.user()){
         if (!snapper){
@@ -90,13 +87,11 @@ Router.map(function(){
       }
       if (currentScreen)
         Blaze.remove(currentScreen);
-      Meteor.subscribe("quotes", this.params._id);
-      console.log(this.params._id);
       Session.set('lastQuote', this.params._id);
+      console.log(Session.get('lastQuote'));
+      Meteor.subscribe("quotes", Session.get('lastQuote'));
+      Meteor.subscribe("userData", this.params._id);
       currentScreen = Blaze.render(Template.singleQuoteTemplate, document.getElementById('content'));
-    },
-    waitOn: function(){
-      return Meteor.subscribe('quotes', this.params._id);
     }
   });
 });

@@ -21,6 +21,7 @@ Router.map(function(){
           if (snapper.state().state == 'left' && scrollX >= 50)
             snapper.close();
         }
+        /*
         if (Meteor.isCordova){
           if (device.platform == 'Android') var apiKey = "935dd074afdbe63752a617d98e9de9694f0b8fde";
           else if (device.platform == 'iOS') var apiKey = "ba077e6d6aa0bda8cdb039e7a5d46b06ed4648a2";
@@ -33,16 +34,11 @@ Router.map(function(){
           appID: apiKey,
           style: "box"
         });
-        //sessionmWidget.embed('rewards');
+        //sessionmWidget.embed('rewards');*/
         Meteor.subscribe("quotes");
         Meteor.call("getUnreadTotal");
         $('body').mousedown(function(){
-          if (snapper.state().state=="right"){
-            sessionmWidget.sendAction('view_recent', function(action, earned, achievement){
-              console.log(action + " recorded"); // Outputs read_article recorded
-            });
-            Meteor.call('clearUnread');
-          }
+          Meteor.call('clearUnread');
         });
         $('body').bind( "touchend", function(e){
           if (snapper.state().state=="right"){

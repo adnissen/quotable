@@ -2,6 +2,9 @@ Template.singleQuoteTemplate.helpers({
   quote: function(){
     return Quotes.findOne({_id: Session.get('lastQuote')});
   },
+  liked: function(){
+    return (Meteor.user().profile.liked.indexOf(Session.get('lastQuote')) != -1)
+  },
   time: function(){
     return moment(Quotes.findOne({_id: Session.get('lastQuote')}).timestamp).format('dddd, MMMM Do');
   },
@@ -23,5 +26,15 @@ Template.singleQuoteTemplate.rendered = function(){
 Template.singleQuoteTemplate.events({
   'click #goToHomeButton': function(){
     Router.go('/');
+  },
+  'click i': function(event){
+    if (Meteor.user().profile.liked.indexOf(Session.get('lastQuote')) != -1){
+      Meteor.call('unlikeQuote', Session.get('lastQuote'));
+      event.target.className = 'fa fa-thumbs-o-up fa-lg';
+    }
+    else{
+      Meteor.call('likeQuote', Session.get('lastQuote'));
+      event.target.className = 'fa fa-thumbs-up fa-lg';
+    }
   }
 });

@@ -1,11 +1,14 @@
 Template.sidebar.helpers({
   recentQuote: function(){
-    return Quotes.find({}, {sort: {timestamp: -1}, limit: 20});
+    return Quotes.find({}, {sort: {timestamp: -1}, limit: 5});
+  },
+  topQuote: function(){
+    return Quotes.find({}, {sort: {likes: -1}, limit: 5});
   },
   friend: function(){
     if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.friends)
       return Meteor.users.find({_id: {$in: Meteor.user().profile.friends}});
-  }, 
+  },
   pending: function(){
    if (Meteor.user() && Meteor.user().profile)
     return Meteor.users.find({_id:{$in: Meteor.user().profile.friendRequests}});
@@ -19,6 +22,9 @@ Template.sidebar.helpers({
   },
   time: function(){
     return moment(this.timestamp).format('dddd, MMMM Do');
+  },
+  liked: function(){
+    return (Meteor.user().profile.liked.indexOf(this._id) != -1)
   }
 });
 
@@ -70,5 +76,15 @@ Template.sidebar.events({
     Meteor.logout();
     snapper.close();
     snapper = null;
+  },
+  'click i': function(event){
+    if (Meteor.user().profile.liked.indexOf(this._id) != -1){
+      Meteor.call('unlikeQuote', this._id);
+      event.target.className = 'fa fa-thumbs-o-up fa-lg';
+    }
+    else{
+      Meteor.call('likeQuote', this._id);
+      event.target.className = 'fa fa-thumbs-up fa-lg';
+    }
   }
 });

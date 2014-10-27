@@ -1,6 +1,8 @@
 Quotes = new Mongo.Collection("quotes");
+TopQuotes = new Mongo.Collection("topQuotes");
 Meteor.subscribe("userData");
 Meteor.subscribe("quotes");
+Meteor.subscribe("topQuotes");
 Meteor.startup(function(){
   currentScreen = null;
   Session.setDefault('activeQuoteMenu', false);

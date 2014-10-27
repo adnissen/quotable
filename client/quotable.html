@@ -142,6 +142,15 @@ ga('send', 'pageview');
       - {{#if overheard}} overheard by {{/if}}@{{authorName}}
       <br>
       {{time}}
+      <br>
+      <br>
+      {{#if currentUser}}
+      {{#if liked}}
+      {{quote.likes}}  <i class="fa fa-thumbs-up fa-lg"></i>
+      {{else}}
+      {{quote.likes}}  <i class="fa fa-thumbs-o-up fa-lg"></i>
+      {{/if}}
+      {{/if}}
     </div>
     <br><br>
     <a class="twitter-share-button" href="https://twitter.com/share"
@@ -235,8 +244,27 @@ ga('send', 'pageview');
   <div class="snap-drawer snap-drawer-right">
     <div>
       <br>
-      <center><h3>Recent Quotes</h3></center>
+      <center><h2>Recent Quotes</h2></center>
       {{#each recentQuote}}
+      <div id="quote">
+        <center>"{{text}}"</center>
+      </div>
+        <br>
+      <div id="quoteAuthor">
+        <center> - {{author}} {{time}} </center>
+      </div>
+      <br>
+      {{#if liked}}
+      <center>{{likes}}  <i class="fa fa-thumbs-up fa-lg"></i></center>
+      {{else}}
+      <center>{{likes}}  <i class="fa fa-thumbs-o-up fa-lg"></i></center>
+      {{/if}}
+      <br>
+      <hr>
+      <br>
+      {{/each}}
+      <center><h2>Top Quotes</h2></center>
+      {{#each topQuote}}
       <div id="quote">
         <center>"{{text}}"</center>
       </div>
@@ -245,6 +273,13 @@ ga('send', 'pageview');
         <center> - {{author}} {{time}}</center>
       </div>
       <br>
+      {{#if liked}}
+      <center>{{likes}}  <i class="fa fa-thumbs-up fa-lg"></i></center>
+      {{else}}
+      <center>{{likes}}  <i class="fa fa-thumbs-o-up fa-lg"></i></center>
+      {{/if}}
+      <br>
+      <hr>
       <br>
       {{/each}}
     </div>

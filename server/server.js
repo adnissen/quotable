@@ -14,6 +14,7 @@ Accounts.onCreateUser(function(options, user){
   user.profile.blocked = new Array();
   user.profile.quotes = new Array();
   user.profile.addedQuotes = new Array();
+  user.profile.liked = new Array();
   user.profile.seenWelcome = false;
 
   return user;
@@ -29,6 +30,7 @@ Accounts.onCreateUser(function(options, user){
  */
 
 Quotes = new Mongo.Collection('quotes');
+TopQuotes = new Mongo.Collection('topQuotes');
 Quotes.allow({
   insert: function(){
     return false;
@@ -87,6 +89,9 @@ Meteor.publish("quotes", function(id){
   }
 });
 
+Meteor.publish("topQuotes", function(){
+  return Quotes.find({}, {sort: {likes: -1}, limit: 5});
+});
 
 Meteor.methods({
   seenWelcome: function(){
@@ -105,8 +110,36 @@ Meteor.methods({
     var text = "Hi! You've been invited by " + thisUser.username + " to try out quotable, an app that lets you remember and share funny things you and your friends say or overhear.\n\nTo get started, all you need to do is visit http://quotable.meteor.com>quotable.meteor.com and sign up! It's totally free, and we won't ever ask for any more personal information than a username and email. To add your friend, simply open the left menu and add " + thisUser.username + " as a friend. That's it!\n\n\nWe hope you enjoy your time with quotable!\n-The quotable Team.";
     Email.send({to:to, from:from, subject:subject, text:text});
   },
+  likeQuote: function(id){
+    if (!this.userId)
+      return;
+    check(id, String);
+    var quote = Quotes.findOne({_id: id});
+    var user = Meteor.users.findOne({_id: this.userId});
+    if (user.profile.liked == undefined || user.profile.liked.indexOf(id) === -1){
+      if (quote.likes == undefined || quote.likes == 0){
+        Quotes.update({_id: id}, {$set: {'likes': 1}});
+      }
+      else{
+        Quotes.update({_id: id}, {$inc: {'likes': 1}});
+      }
+      Meteor.users.update({_id: this.userId}, {$push: {'profile.liked': id}});
+    }
+  },
+  unlikeQuote: function(id){
+    if (!this.userId)
+      return;
+    check(id, String);
+    var quote = Quotes.findOne({_id: id});
+    var user = Meteor.users.findOne({_id: this.userId});
+    if (user.profile.liked.indexOf(id) != -1){
+      Quotes.update({_id: id}, {$inc: {'likes': -1}});
+    }
+      Meteor.users.update({_id: this.userId}, {$pull: {'profile.liked': id}});
+
+  },
   getQuotesTotal: function(){
-    return Quotes.find().count() + 2000;
+    return Quotes.find().count();
   },
   getUnreadTotal: function(){
     if (!this.userId)
@@ -126,6 +159,8 @@ Meteor.methods({
     return 0;
   },
   addQuote: function(_text, _addedTo){
+    check(_text, String);
+    check(_addedTo, String);
     if (!this.userId)
       return "not logged in";
     //set _timestamp to the current time
@@ -137,7 +172,7 @@ Meteor.methods({
     addedQuote = Quotes.insert({text: _text, timestamp: _timestamp, addedBy: _addedBy, addedTo: _addedTo, timestamp: _timestamp});
     Meteor.users.update({_id: _addedTo}, {$addToSet: {'profile.quotes': addedQuote}});
     Meteor.users.update({_id: this.userId}, {$addToSet: {'profile.addedQuotes': addedQuote}});
-    
+
     //increment unread
     Meteor.users.update({_id: {$in: thisUser.profile.friends}}, {$inc: {'profile.unread': 1}}, {multi: true});
     return addedQuote._id;

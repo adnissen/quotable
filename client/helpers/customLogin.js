@@ -20,12 +20,13 @@ Template.customLogin.events({
     if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
       Accounts.createUser({username: $('#customLoginUsername').val().toLowerCase(), password: $('#customLoginPassword').val()}, function(err){
         if (err)
-        return;
-      Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
-        if (Meteor.user()){
-          Router.go('/');
-        }
-      });
+          return;
+        keen.addEvent('signups', {username: $('#customLoginUsername').val().toLowerCase(), timestamp: new Date().toISOString()});
+        Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
+          if (Meteor.user()){
+            Router.go('/');
+          }
+        });
       });
     }
   },

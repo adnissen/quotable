@@ -29,6 +29,7 @@ Template.quoteControls.events({
     }
     addToUser = Meteor.users.findOne({'username': val});
     Meteor.call("addQuote", $('#quoteEntry').val(), addToUser._id, function(err, data){
+      keen.addEvent('addQuote', {username: Meteor.user().username, quote: $('#quoteEntry').val(), addedTo: addToUser.username, timestamp: new Date().toISOString()});
       if (Meteor.userId() != addToUser._id){
         sessionmWidget.sendAction('quote', function(action, earned, achievement){
           console.log(action + " recorded"); // Outputs read_article recorded

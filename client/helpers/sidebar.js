@@ -36,11 +36,15 @@ Template.sidebar.events({
         console.log(action + " recorded"); // Outputs read_article recorded
       });
     });
+    swal('You just added a friend!', "Once they accept your request, you'll be able to see each other's quotes and attribute quotes to them.", "success");
+    keen.addEvent('addFriend', {username: $('#addFriendField').val().toLowerCase(), addedBy: Meteor.user().username, timestamp: new Date().toISOString()});
     $('#addFriendField').val('');
   },
   'click #inviteFriend':function(){
     if ($('#inviteFriendField').val() != ''){
       Meteor.call('sendInviteEmail', $('#inviteFriendField').val());
+      swal('You just added a friend!', "Once they accept your request, you'll be able to see each other's quotes and attribute quotes to them.", "success");
+      keen.addEvent('emailInvite', {email: $('#inviteFriendField').val(), addedBy: Meteor.user().username, timestamp: new Date().toISOString()});
       $('#inviteFriendField').val('');
     }
   },

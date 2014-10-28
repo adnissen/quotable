@@ -7,20 +7,20 @@ Template.customLogin.quotesTotal = function(){
 
 Template.customLogin.events({
   'click #customLoginSignin': function(){
-    if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
-      Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
-        if (Meteor.user()){
-          Router.go('/');
-        }
-      });
-    }
+    Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
+      if (err)
+        swal('Uh-oh', "That's not a valid username or password!", "error");
+      if (Meteor.user()){
+        Router.go('/');
+      }
+    });
   },
 
   'click #customLoginCreate': function(){
     if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
       Accounts.createUser({username: $('#customLoginUsername').val().toLowerCase(), password: $('#customLoginPassword').val()}, function(err){
         if (err)
-          return;
+          swal('Oops', "That username is already taken!", "error");
         keen.addEvent('signups', {username: $('#customLoginUsername').val().toLowerCase(), timestamp: new Date().toISOString()});
         Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
           if (Meteor.user()){

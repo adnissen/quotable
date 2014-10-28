@@ -78,7 +78,7 @@ Template.sidebar.events({
     snapper = null;
   },
   'click i': function(event){
-    if (Meteor.user().profile.liked.indexOf(this._id) != -1){
+    if (Meteor.user().profile.liked == undefined || Meteor.user().profile.liked.indexOf(this._id) != -1){
       Meteor.call('unlikeQuote', this._id);
       event.target.className = 'fa fa-thumbs-o-up fa-lg';
     }

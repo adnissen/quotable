@@ -116,7 +116,10 @@ Meteor.methods({
     check(id, String);
     var quote = Quotes.findOne({_id: id});
     var user = Meteor.users.findOne({_id: this.userId});
-    if (user.profile.liked == undefined || user.profile.liked.indexOf(id) === -1){
+    if (user.profile.liked == undefined){
+      Meteor.users.update({_id: this.userId}, {$set: {'profile.liked': []}});
+    }
+    if (user.profile.liked.indexOf(id) === -1){
       if (quote.likes == undefined || quote.likes == 0){
         Quotes.update({_id: id}, {$set: {'likes': 1}});
       }
@@ -132,6 +135,9 @@ Meteor.methods({
     check(id, String);
     var quote = Quotes.findOne({_id: id});
     var user = Meteor.users.findOne({_id: this.userId});
+    if (user.profile.liked == undefined){
+      Meteor.users.update({_id: this.userId}, {$set: {'profile.liked': []}});
+    }
     if (user.profile.liked.indexOf(id) != -1){
       Quotes.update({_id: id}, {$inc: {'likes': -1}});
     }

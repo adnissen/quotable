@@ -28,7 +28,7 @@ Template.singleQuoteTemplate.events({
     Router.go('/');
   },
   'click i': function(event){
-    if (Meteor.user().profile.liked.indexOf(Session.get('lastQuote')) != -1){
+    if (Meteor.user().profile.liked == undefined || Meteor.user().profile.liked.indexOf(Session.get('lastQuote')) != -1){
       Meteor.call('unlikeQuote', Session.get('lastQuote'));
       event.target.className = 'fa fa-thumbs-o-up fa-lg';
     }

@@ -60,20 +60,25 @@ Emails = new Mongo.Collection('emails');
 
 Meteor.publish("userData", function(id){
   check(id, Match.Any);
-  /*
+  
   if (this.userId){
     if (id != undefined){
       quote = Quotes.findOne({_id: id});
-      return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}, {_id: quote.addedTo}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
+      return Meteor.users.find({_id: quote.addedTo}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
     }
     else{
-      return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
+      var quotes = Quotes.find({}, {sort: {likes: -1}, limit: 5});
+      var ary = new Array();
+      quotes.forEach(function(q){
+        ary.push(q.addedTo);
+      });
+      return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}, {_id: {$in: ary}}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
     }
   }
   else{
     quote = Quotes.findOne({_id: id});
     return Meteor.users.find({_id: quote.addedTo});
-  }*/
+  }
   return Meteor.users.find();
 });
 

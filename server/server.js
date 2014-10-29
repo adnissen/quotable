@@ -88,7 +88,8 @@ Meteor.publish("quotes", function(id, author){
   check(author, Match.Any);
   if (this.userId){
     if (author){
-      return Quotes.find({addedTo: author});
+      authorUser = Meteor.users.findOne({_id: author});
+      return Quotes.find({addedTo: authorUser._id});
     }
     else{
       user = Meteor.users.findOne({_id: this.userId});

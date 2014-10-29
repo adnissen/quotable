@@ -82,12 +82,19 @@ Meteor.publish("userData", function(id){
   return Meteor.users.find();
 });
 
-Meteor.publish("quotes", function(id){
+Meteor.publish("quotes", function(id, author){
   //bad practice, but a bunch of subs don't need the id param so we need to do it this way
   check(id, Match.Any);
+  check(author, Match.Any);
   if (this.userId){
-    user = Meteor.users.findOne({_id: this.userId});
-    return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}, {_id: id}]});
+    if (author){
+      authorUser = Meteor.users.findOne({_id: author});
+      return Quotes.find({addedTo: authorUser});
+    }
+    else{
+      user = Meteor.users.findOne({_id: this.userId});
+      return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}, {_id: id}]}, {sort: {timestamp: -1}, limit: 5});
+    }
   }
   else{
     return Quotes.find({_id: id});

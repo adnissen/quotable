@@ -73,7 +73,7 @@ Meteor.publish("userData", function(id){
         console.log(q.addedTo);
         ary.push(q.addedTo);
       });
-      return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendRequests' : this.userId}, {_id: {$in: ary}}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
+      return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendsRequested' : this.userId}, {_id: {$in: ary}}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
     }
   }
   else{
@@ -89,10 +89,12 @@ Meteor.publish("quotes", function(id, author){
   check(author, Match.Any);
   if (this.userId){
     if (author){
+      console.log('author page');
       authorUser = Meteor.users.findOne({_id: author});
       return Quotes.find({addedTo: authorUser._id});
     }
     else{
+      console.log('where I think we are');
       user = Meteor.users.findOne({_id: this.userId});
       return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}, {_id: id}]}, {sort: {timestamp: -1}, limit: 5});
     }
@@ -230,6 +232,7 @@ Meteor.methods({
     Meteor.users.update({_id: this.userId}, {$addToSet: {'profile.friendsRequested': _user._id}});
   },
   acceptFriendRequest: function(_userId){
+    check(_userId, String);
     if (!this.userId)
       return;
     _user = Meteor.users.findOne({_id: _userId});

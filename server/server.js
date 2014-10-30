@@ -89,12 +89,10 @@ Meteor.publish("quotes", function(id, author){
   check(author, Match.Any);
   if (this.userId){
     if (author){
-      console.log('author page');
       authorUser = Meteor.users.findOne({_id: author});
       return Quotes.find({addedTo: authorUser._id});
     }
     else{
-      console.log('where I think we are');
       user = Meteor.users.findOne({_id: this.userId});
       return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}, {_id: id}]}, {sort: {timestamp: -1}, limit: 5});
     }

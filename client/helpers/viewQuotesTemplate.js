@@ -15,7 +15,7 @@ Template.viewQuotesTemplate.helpers({
 });
 
 Template.viewQuotesTemplate.rendered = function(){
-  Meteor.subscribe("quotes", Session.get('author'));
+  Meteor.subscribe("quotes", null, Session.get('author'));
 };
 
 Template.viewQuotesTemplate.events({

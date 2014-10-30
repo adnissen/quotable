@@ -37,11 +37,7 @@ Template.sidebar.events({
     currentScreen = Blaze.render(Template.viewQuotesTemplate, document.getElementById('content'));
   },
   'click #submitFriend': function(){
-    Meteor.call("sendFriendRequest", $('#addFriendField').val().toLowerCase(), function(err, data){
-      sessionmWidget.sendAction('add_friend', function(action, earned, achievement){
-        console.log(action + " recorded"); // Outputs read_article recorded
-      });
-    });
+    Meteor.call("sendFriendRequest", $('#addFriendField').val().toLowerCase(), function(err, data){});
     swal('You just added a friend!', "Once they accept your request, you'll be able to see each other's quotes and attribute quotes to them.", "success");
     keen.addEvent('addFriend', {username: $('#addFriendField').val().toLowerCase(), addedBy: Meteor.user().username, timestamp: new Date().toISOString()});
     $('#addFriendField').val('');

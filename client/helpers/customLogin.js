@@ -11,6 +11,7 @@ Template.customLogin.events({
       if (err)
         swal('Uh-oh', "That's not a valid username or password!", "error");
       if (Meteor.user()){
+        Meteor.subscribe("userData");
         Router.go('/');
       }
     });
@@ -24,6 +25,7 @@ Template.customLogin.events({
         keen.addEvent('signups', {username: $('#customLoginUsername').val().toLowerCase(), timestamp: new Date().toISOString()});
         Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
           if (Meteor.user()){
+            Meteor.subscribe("userData");
             Router.go('/');
           }
         });

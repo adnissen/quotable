@@ -1,6 +1,7 @@
 Quotes = new Mongo.Collection("quotes");
 TopQuotes = new Mongo.Collection("topQuotes");
-Meteor.subscribe("userData");
+if (Meteor.user())
+  Meteor.subscribe("userData");
 Meteor.subscribe("quotes", null, Session.get('author'));
 Meteor.subscribe("topQuotes");
 Meteor.startup(function(){

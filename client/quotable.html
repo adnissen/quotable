@@ -85,7 +85,7 @@ ga('send', 'pageview');
     <br>
     <br>
     <select id="userDropdown">
-      <option value="{{thisUser}}">I overheard it<i class="fa fa-arrow-down"></i></option>
+      <option value="{{currentUser.username}}">I overheard it<i class="fa fa-arrow-down"></i></option>
       {{#each friends}}
       <option value="{{username}}">{{username}}</option>
       {{/each}}

@@ -3,6 +3,7 @@ Router.map(function(){
     path: '/',
     action: function(){
       if (Meteor.user() || Meteor.loggingIn()){
+        Meteor.subscribe('userData');
         console.log('we have a user');
         //add snapper
         snapper = new Snap({

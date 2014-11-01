@@ -64,7 +64,7 @@ Meteor.publish("userData", function(id){
   if (this.userId){
     if (id != undefined){
       quote = Quotes.findOne({_id: id});
-      return Meteor.users.find({_id: quote.addedTo}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
+      return Meteor.users.find({_id: quote.addedTo}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1, 'email': 1}});
     }
     else{
       var quotes = Quotes.find({}, {sort: {likes: -1}, limit: 5});

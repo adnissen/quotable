@@ -1,4 +1,13 @@
 Router.map(function(){
+  this.route('newPassword', {
+    path: '/reset-password/:token',
+    action: function(){
+      if (currentScreen)
+        Blaze.remove(currentScreen);
+      currentScreen = Blaze.render(Template.newPassword, document.getElementById('content'));
+      Session.set('token', this.params.token);
+    }
+  });
   this.route('home', {
     path: '/',
     action: function(){
@@ -43,9 +52,6 @@ Router.map(function(){
         });
         $('body').bind( "touchend", function(e){
           if (snapper.state().state=="right"){
-            sessionmWidget.sendAction('view_recent', function(action, earned, achievement){
-              console.log(action + " recorded"); // Outputs read_article recorded
-            });
             Meteor.call('clearUnread');
           }
         });

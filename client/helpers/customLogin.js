@@ -19,7 +19,7 @@ Template.customLogin.events({
 
   'click #customLoginCreate': function(){
     if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
-      Accounts.createUser({username: $('#customLoginUsername').val().toLowerCase(), password: $('#customLoginPassword').val()}, function(err){
+      Accounts.createUser({username: $('#customLoginUsername').val().toLowerCase(), password: $('#customLoginPassword').val(), email: $('#customLoginEmail').val()}, function(err){
         if (err)
           swal('Oops', "That username is already taken!", "error");
         keen.addEvent('signups', {username: $('#customLoginUsername').val().toLowerCase(), timestamp: new Date().toISOString()});
@@ -35,6 +35,12 @@ Template.customLogin.events({
 
   'click img': function(){
     addToHomescreen();
+  },
+  
+  'click #customLoginForgot': function(){
+    if (currentScreen)
+      Blaze.remove(currentScreen);
+    currentScreen = Blaze.render(Template.resetPassword, document.getElementById('content'));
   }
 });
 

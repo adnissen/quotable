@@ -70,7 +70,6 @@ Meteor.publish("userData", function(id){
       var quotes = Quotes.find({}, {sort: {likes: -1}, limit: 5});
       var ary = new Array();
       quotes.forEach(function(q){
-        console.log(q.addedTo);
         ary.push(q.addedTo);
       });
       return Meteor.users.find({$or: [{_id: this.userId}, {'profile.friends': this.userId}, {'profile.friendsRequested' : this.userId}, {_id: {$in: ary}}]}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});

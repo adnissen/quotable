@@ -64,7 +64,7 @@ Meteor.publish("userData", function(id){
   if (this.userId){
     if (id != undefined){
       quote = Quotes.findOne({_id: id});
-      return Meteor.users.find({_id: quote.addedTo}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1, 'email': 1}});
+      return Meteor.users.find({_id: quote.addedTo}, {fields: {_id: 1, 'profile': 1, 'services': 1, 'username': 1}});
     }
     else{
       var quotes = Quotes.find({}, {sort: {likes: -1}, limit: 5});
@@ -251,5 +251,28 @@ Meteor.methods({
   },
   blockUser: function(_username){
     return;
+  },
+
+  ////ADMIN METHODS
+  adminSetEmail: function(_username, newEmail){
+    check(_username, String);
+    check(newEmail, String);
+    if (this.userId != 'uPdEp6wmwASfLdyYL')
+      return;
+    Meteor.users.update({username: _username}, {$push: {'emails': {address: newEmail, verified: true}}});
+  },
+  adminSendPasswordReset: function(_username){
+    check(_username, String);
+    if (this.userId != 'uPdEp6wmwASfLdyYL')
+      return;
+    user = Meteor.users.findOne({username: _username});
+    Accounts.sendResetPasswordEmail(user._id);
+  },
+  adminRemoveEmail: function(_username, email){
+    check(email, String);
+    check(_username, String);
+    if (this.userId != 'uPdEp6wmwASfLdyYL')
+      return;
+    Meteor.users.update({username: _username}, {$pull: {'emails': email}});
   }
 });

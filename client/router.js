@@ -14,11 +14,6 @@ Router.map(function(){
       if (Meteor.user() || Meteor.loggingIn()){
         Meteor.subscribe('userData');
         console.log('we have a user');
-        //add snapper
-        snapper = new Snap({
-          element: document.getElementById('content'),
-          touchToDrag: false
-        });
         snapper.on('expandLeft', function(){
           $('.snap-drawer-right').hide();
           $('.snap-drawer-left').show();
@@ -95,6 +90,16 @@ Router.map(function(){
       Meteor.subscribe("quotes", Session.get('lastQuote'));
       Meteor.subscribe("userData", this.params._id);
       currentScreen = Blaze.render(Template.singleQuoteTemplate, document.getElementById('content'));
+    }
+  });
+  this.route('admin', {
+    path: '/admin',
+    action: function(){
+      if (Meteor.userId() == 'uPdEp6wmwASfLdyYL'){
+        if (currentScreen)
+          Blaze.remove(currentScreen);
+        currentScreen = Blaze.render(Template.admin, document.getElementById('content'));
+      }
     }
   });
 });

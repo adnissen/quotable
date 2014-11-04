@@ -308,3 +308,20 @@ ga('send', 'pageview');
   </div>
 </div>
 </template>
+
+<template name="admin">
+<h3>Users: {{numUsers}}</h3>
+<h3>Quotes: {{numQuotes}}</h3>
+<table> 
+  <tr>
+    <th>username</th>
+    <th>email</th>
+  </tr>
+  {{#each users}}
+  <tr>
+    <td>{{username}}</td>
+    <td>{{email}}</td>
+  </tr>
+  {{/each}}
+</table>
+</template>

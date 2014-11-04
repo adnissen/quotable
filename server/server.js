@@ -254,6 +254,11 @@ Meteor.methods({
   },
 
   ////ADMIN METHODS
+  adminIsAdmin: function(){
+    if (this.userId != 'uPdEp6wmwASfLdyYL')
+      return;
+    return true;
+  },
   adminSetEmail: function(_username, newEmail){
     check(_username, String);
     check(newEmail, String);
@@ -274,5 +279,35 @@ Meteor.methods({
     if (this.userId != 'uPdEp6wmwASfLdyYL')
       return;
     Meteor.users.update({username: _username}, {$pull: {'emails': email}});
+  },
+  adminGetNumUsers: function(){
+    if (this.userId != 'uPdEp6wmwASfLdyYL')
+      return;
+    var d = {};
+    d.count = Meteor.users.find().count();
+    return d;
+  },
+  adminGetNumQuotes: function(){
+    if (this.userId != 'uPdEp6wmwASfLdyYL')
+      return;
+    var d = {};
+    d.count = Quotes.find().count();
+    return d;
+  },
+  adminGetAllUsers: function(){
+    if (this.userId != 'uPdEp6wmwASfLdyYL')
+      return;
+    var d = {};
+    d.users = new Array();
+    Meteor.users.find().forEach(function (user){
+      var u = {};
+      u.username = user.username;
+      if (user.emails)
+        u.email = user.emails[0].address;
+      else
+        u.email = "";
+      d.users.push(u);
+    });
+    return d;
   }
 });

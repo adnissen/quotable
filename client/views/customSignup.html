@@ -1,0 +1,19 @@
+<template name="customSignup">
+<div class='customLogin'>
+{{#if loggingIn}}
+<center>
+<h3>Loading your quotes, this should only take a second.</h3>
+</center>
+{{/if}}
+{{#unless loggingIn}}
+<center>
+  <br>
+  <input type="text" class="topcoat-text-input" placeholder="Pick a username" id="customLoginUsername" value="">
+  <input type="text" class="topcoat-text-input" placeholder="Enter your email address" id="customLoginEmail" value="">
+  <input type="password" class="topcoat-text-input" placeholder="Choose a password" id="customLoginPassword" value=""><br><br>
+  <button class="welcomeScreenBtnSignup" data-style="expand-left" data-color="green" id="customLoginCreate">Sign up</button><br><br>
+  <center><div class='welcomeScreenSignIn'>I already have an account</div></center>
+</center>
+  {{/unless}}
+</div>
+</template>

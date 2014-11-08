@@ -60,7 +60,7 @@ Router.map(function(){
         if (Meteor.user())
           currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
         else
-          currentScreen = Blaze.render(Template.customLogin, document.getElementById('content'));
+          currentScreen = Blaze.render(Template.welcomeScreen, document.getElementById('content'));
       }
     }
   });

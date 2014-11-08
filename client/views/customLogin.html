@@ -1,8 +1,5 @@
 <template name="customLogin">
-<center>
-  <br>
-  <img src="apple-touch-icon-76x76.png">
-</center>
+<div class='customLogin'>
 {{#if loggingIn}}
 <center>
 <h3>Loading your quotes, this should only take a second.</h3>
@@ -10,30 +7,13 @@
 {{/if}}
 {{#unless loggingIn}}
 <center>
-<br>
-<h3>Quote The World Around You</h3>
-<p>Quotable is the place to share great quotes from any place with your friends and the world. It's also in active development, so check back often for updates!</p>
-<br>
-<h3>Sign up, it's free.</h3>
-<br>
-</center>
-<center>
   <br>
-  <input type="text" class="topcoat-text-input" placeholder="Enter a Username" id="customLoginUsername" value=""><br><br>
-  <input type="password" class="topcoat-text-input" placeholder="Choose a Password" id="customLoginPassword" value=""><br><br>
-  <input type="text" class="topcoat-text-input" placeholder="Email (optional)" id="customLoginEmail" value=""><br>
-  <small>We will only email you for account recovery, nothing else.</small><br><br>
-
-  <button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginSignin"><span class="ladda-label" >Sign In</span></button><br>or<br>
-  <button class="ladda-button" data-style="expand-left" data-color="green" id="customLoginCreate"><span class="ladda-label" >Create Account</span></button><br><br>
-  <br>
-  <a href='#' id="customLoginForgot">I forgot my password</a>
+  <input type="text" class="topcoat-text-input" placeholder="Enter Username" id="customLoginUsername" value="">
+  <input type="password" class="topcoat-text-input" placeholder="Enter Password" id="customLoginPassword" value=""><br><br>
+  <button class="welcomeScreenBtnSignup" data-style="expand-left" data-color="green" id="customLoginSignin">Login</button><br><br>
+  <a href='#' id="customLoginForgot">I forgot my password</a><br><br>
+  <center><div class='welcomeScreenSignUp'>I need to create an account</div></center>
 </center>
   {{/unless}}
-  <center>
-    <p>{{quotesTotal}} quotes and rising!</p>
-    <p>Need to contact me? I'm <a href="http://twitter.com/ambushsabre">@ambushsabre</a> on twitter, or you can email me at <a href="mailto:andrew_nissen@Yahoo.com">andrew_nissen@yahoo.com</a></p>
-  </center>
+</div>
 </template>
-
-

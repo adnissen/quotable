@@ -1,13 +1,7 @@
-Template.customLogin.quotesTotal = function(){
-  Meteor.call('getQuotesTotal', function(e, d){
-    Session.set('quotesTotal', d);
-  });
-  return Session.get('quotesTotal');
-}
-
-Template.customLogin.events({
+Template.customSignup.events({
   'click #customLoginSignin': function(){
     Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
+      console.log(err);
       if (err)
         swal('Uh-oh', "That's not a valid username or password!", "error");
       if (Meteor.user()){
@@ -43,10 +37,12 @@ Template.customLogin.events({
       Blaze.remove(currentScreen);
     currentScreen = Blaze.render(Template.resetPassword, document.getElementById('content'));
   },
-  'click .welcomeScreenSignUp': function(){
+  'click .welcomeScreenSignIn': function(){
+    $('.topcoat-navigation-bar').show();
+    $('.content').css('top', 70);
     if (currentScreen)
       Blaze.remove(currentScreen);
-    currentScreen = Blaze.render(Template.customSignup, document.getElementById('content'));
+    currentScreen = Blaze.render(Template.customLogin, document.getElementById('content'));
   }
 });
 

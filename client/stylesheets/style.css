@@ -181,11 +181,67 @@ background-color: #FFFFFF !important;
 .topcoat-navigation-bar{
   position: absolute;
   width: 100%;
-  background-color: #333 !important;
+  background-color: #2aca76 !important;
   box-shadow: none !important;
 }
 
 .topcoat-navigation-bar__title{
   z-index: 99999;
   color: #FFFFFF !important;
+}
+
+.welcomeScreenContent, .customLogin{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  color: #FFFFFF;
+  background-color: #2aca76;
+}
+
+.welcomeScreenContent h1 {
+  font-size: 98px;
+}
+
+.welcomeScreenContent h3{
+  font-size: 22px;
+}
+
+.welcomeScreenBtnSignup{
+  margin-top: 20%;
+  font-size: 36px;
+  color: #FFF;
+  /* font-weight: 100; */
+  background-color: inherit;
+  padding: 30px 90px;
+  border: 3px solid;
+  border-color: #FFFFFF;
+  border-radius: 5px;
+}
+
+.welcomeScreenSignIn{
+  padding-top: 20px;
+  font-size: 24px;
+}
+
+.welcomeScreenSignUp{
+  font-size: 24px;
+}
+
+#customLoginUsername, #customLoginPassword, #customLoginEmail{
+  line-height: 3rem;
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 0 1.25rem;
+  width: 100%;
+  height: 75px;
+  border: none;
+  border-radius: 0;
+  background-color: #7CE2AC;
+  box-shadow: inset 0 1px rgba(0,0,0,.1);
+  color: #FFFFFF;
+  vertical-align: top;
+}
+
+#customLoginForgot {
+  color: #FFFFFF;
 }

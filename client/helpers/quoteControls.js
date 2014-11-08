@@ -12,6 +12,10 @@ Template.quoteControls.helpers({
 });
 Template.quoteControls.rendered = function(){
   $('#quoteEntry').show();
+  //$('#quoteEntry').focus();
+  document.addEventListener("resume", function(){
+    $('#quoteEntry').focus();
+  }, false);
   if (Meteor.user().profile.friends.length <= 0 && (Meteor.user().profile.seenWelcome == false || Meteor.user().profile.seenWelcome == undefined)){
     swal("Hello!", "Welcome to quotable! Tap the icon on the right to see recent quotes, but there won't be any because you don't have any friends! Tap the icon on the left to add or invite friends. Until then, we've added a couple popular quotes to the menu on the right. Start quoting the world around you!");
     Meteor.call('seenWelcome');

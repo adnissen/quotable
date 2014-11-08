@@ -72,6 +72,9 @@ Template.sidebar.events({
     Meteor.logout();
     snapper.close();
     snapper = null;
+    if (currentScreen)
+      Blaze.remove(currentScreen)
+    currentScreen = Blaze.render(Template.customLogin, document.getElementById('content'));
   },
   'click i': function(event){
     if (Meteor.user().profile.liked == undefined || Meteor.user().profile.liked.indexOf(this._id) != -1){

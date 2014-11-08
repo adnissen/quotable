@@ -1,0 +1,85 @@
+<template name="sidebar">
+<div class="snap-drawers">
+  <div class="snap-drawer snap-drawer-left">
+    <div>
+      <br>
+      <center>
+        <div id='myQuotes'><h3> My Quotes </h3></div>
+        <br>
+        <strong> Friends </strong><br>
+        {{#each friend}}
+        <div id="quoteAuthor">
+          {{username}}<br><br>
+        </div>
+        {{/each}}
+        <br>
+        <br>
+        <strong> Pending (tap to accept) </strong><br><br>
+        {{#each pending}}
+        <div id="pendingFriend">{{username}}</div>
+        {{/each}}
+        <br>
+        <br>
+        <input type="text" class="topcoat-text-input" placeholder="Username" id="addFriendField" value="">
+
+        <button class="ladda-button" data-style="expand-left" data-color="green" id="submitFriend"><span class="ladda-label" >Send Friend Request</span></button><br><br><br>
+
+        <input type="text" class="topcoat-text-input" placeholder="Email" id="inviteFriendField" value="">
+
+        <button class="ladda-button" data-style="expand-left" data-color="green" id="inviteFriend"><span class="ladda-label" >Invite Friend to Quotable</span></button><br><br><br>
+
+
+
+        <div id="rewards"></div><br><br><br>
+        <button class="ladda-button" data-style="expand-left" data-color="green" id="logOut"><span class="ladda-label" >Log Out</span></button><br><br><br>
+
+      </center>
+    </div>
+  </div>
+  <div class="snap-drawer snap-drawer-right">
+    <div>
+      <br>
+      <center><h2>Recent Quotes</h2></center>
+      {{#each recentQuote}}
+      <div id="quote">
+        <center>"{{text}}"</center>
+      </div>
+        <br>
+      <div id="quoteAuthor">
+        <center> - {{author}} {{time}} </center>
+      </div>
+      <br>
+      {{#if liked}}
+      <center>{{likes}}  <i class="fa fa-thumbs-up fa-lg"></i></center>
+      {{else}}
+      <center>{{likes}}  <i class="fa fa-thumbs-o-up fa-lg"></i></center>
+      {{/if}}
+      <br>
+      <hr>
+      <br>
+      {{/each}}
+      <center><h2>Top Quotes</h2></center>
+      {{#each topQuote}}
+      <div id="quote">
+        <center>"{{text}}"</center>
+      </div>
+        <br>
+      <div id="quoteAuthor">
+        <center> - {{author}} {{time}}</center>
+      </div>
+      <br>
+      {{#if liked}}
+      <center>{{likes}}  <i class="fa fa-thumbs-up fa-lg"></i></center>
+      {{else}}
+      <center>{{likes}}  <i class="fa fa-thumbs-o-up fa-lg"></i></center>
+      {{/if}}
+      <br>
+      <hr>
+      <br>
+      {{/each}}
+    </div>
+  </div>
+</div>
+</template>
+
+

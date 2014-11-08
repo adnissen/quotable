@@ -1,0 +1,20 @@
+<template name="viewQuotesTemplate">
+<div id="viewQuotesDiv">
+  {{#each authorQuote}}
+  <div id="quote">
+    <center>"{{text}}"</center>
+  </div>
+  <div id="quoteAuthor">
+    <center> - {{author}}{{#if isOwner}}<i class="fa fa-trash fa-lg"></i>{{/if}}</center>
+  </div>
+  <br>
+  <br>
+  {{/each}}
+    {{#unless isOwner}}
+    <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="red" id="removeFriendButton"><span class="ladda-label">Remove Friend</span></button></center>
+    {{/unless}}
+    <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="green" id="goToHomeButtonViewQuotes"><span class="ladda-label">Back</span></button></center>
+</div>
+</template>
+
+

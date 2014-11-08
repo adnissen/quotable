@@ -1,0 +1,40 @@
+<template name="singleQuoteTemplate">
+<div id="singleQuoteDiv">
+  <br>
+  <br>
+  <center>
+    <div id="singleQuoteDiv">
+      "{{quote.text}}"
+      <br>
+      <br>
+      - {{#if overheard}} overheard by {{/if}}@{{authorName}}
+      <br>
+      {{time}}
+      <br>
+      <br>
+      {{#if currentUser}}
+      {{#if liked}}
+      {{quote.likes}}  <i class="fa fa-thumbs-up fa-lg"></i>
+      {{else}}
+      {{quote.likes}}  <i class="fa fa-thumbs-o-up fa-lg"></i>
+      {{/if}}
+      {{/if}}
+    </div>
+    <br><br>
+    <a class="twitter-share-button" href="https://twitter.com/share"
+      data-related="twitterdev"
+      data-size="large"
+      data-text='"{{quote.text}}" - {{#if overheard}}overheard by {{/if}}{{authorName}}'
+      data-url="http://quotable.meteor.com/quotes/{{quote._id}}"
+      data-hashtags="quotable"
+      data-count="none">
+      Tweet
+    </a>
+    <br>
+    <br>
+    <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="green" id="goToHomeButton"><span class="ladda-label" >Back</span></button></center>
+  </center>
+</div>
+</template>
+
+

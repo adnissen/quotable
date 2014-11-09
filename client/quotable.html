@@ -38,7 +38,9 @@
 <body>
 {{> headerView}}
 <div class="container">
+  {{#if currentUser}}
   {{> sidebar}}
+  {{/if}}
   <div class="content snap-content" id="content">
   </div>
 </div>

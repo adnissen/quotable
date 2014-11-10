@@ -10,32 +10,17 @@ Template.customLogin.events({
     Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
       if (err)
         swal('Uh-oh', "That's not a valid username or password!", "error");
-      keen.addEvent('logins', {username: $('#customLoginUsername').val().toLowerCase()});
+      //keen.addEvent('logins', {username: $('#customLoginUsername').val().toLowerCase()});
+      console.log('redirecting them to the homepage');
       Meteor.subscribe("userData");
+      $('.topcoat-navigation-bar').show();
+      $('.content').css('top', 70);
       Router.go('/');
     });
   },
-
-  'click #customLoginCreate': function(){
-    if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
-      Accounts.createUser({username: $('#customLoginUsername').val().toLowerCase(), password: $('#customLoginPassword').val(), email: $('#customLoginEmail').val()}, function(err){
-        if (err)
-          swal('Oops', "That username is already taken!", "error");
-        keen.addEvent('signups', {username: $('#customLoginUsername').val().toLowerCase(), timestamp: new Date().toISOString()});
-        Meteor.loginWithPassword($('#customLoginUsername').val().toLowerCase(), $('#customLoginPassword').val(), function(err){
-          if (Meteor.user()){
-            Meteor.subscribe("userData");
-            Router.go('/');
-          }
-        });
-      });
-    }
-  },
-
   'click img': function(){
     addToHomescreen();
   },
-  
   'click #customLoginForgot': function(){
     if (currentScreen)
       Blaze.remove(currentScreen);

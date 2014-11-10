@@ -36,9 +36,7 @@ Template.viewQuotesTemplate.rendered = function(){
 Template.viewQuotesTemplate.events({
   'click #goToHomeButtonViewQuotes': function(){
     if (Meteor.user() == null){
-      if (currentScreen)
-        Blaze.remove(currentScreen);
-      currentScreen = Blaze.render(Template.welcomeScreen, document.getElementById('content'));
+      Router.go('/');
       return;
     }
     Router.go('/');
@@ -47,9 +45,7 @@ Template.viewQuotesTemplate.events({
   'click #removeFriendButton': function(){
     Meteor.call("removeFriend", Session.get('author'));
     Meteor.subscribe('quotes');
-    if (currentScreen)
-      Blaze.remove(currentScreen);
-    currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+    Router.go('/');
   },
 
   'click .fa-trash': function(){

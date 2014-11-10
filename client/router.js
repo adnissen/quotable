@@ -25,9 +25,30 @@ Router.map(function(){
   this.route('home', {
     path: '/',
     action: function(){
+       console.log("going to start rendering");
+        if (currentScreen){
+          console.log('1');
+          Blaze.remove(currentScreen);
+        }
+        console.log(Meteor.user());
+        console.log(Meteor.loggingIn());
+        if (Meteor.user() || Meteor.loggingIn()){
+          console.log('2');
+          currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+        }
+        else{
+          console.log('3');
+          currentScreen = Blaze.render(Template.welcomeScreen, document.getElementById('content'));
+        }
       if (Meteor.user() || Meteor.loggingIn()){
         Meteor.subscribe('userData');
         console.log('we have a user');
+        if (!snapper){
+          snapper = new Snap({
+            element: document.getElementById('content'),
+            touchToDrag: false
+          });
+        }
         snapper.on('expandLeft', function(){
           $('.snap-drawer-right').hide();
           $('.snap-drawer-left').show();
@@ -64,18 +85,8 @@ Router.map(function(){
             Meteor.call('clearUnread');
           }
         });
-        console.log("going to start rendering");
-        if (currentScreen)
-          Blaze.remove(currentScreen);
-        currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
-      } else{
-        if (currentScreen)
-          Blaze.remove(currentScreen);
-        if (Meteor.user())
-          currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
-        else
-          currentScreen = Blaze.render(Template.welcomeScreen, document.getElementById('content'));
       }
+       
     }
   });
   this.route('singleQuoteTemplate', {

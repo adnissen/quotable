@@ -11,9 +11,11 @@
   <br>
   {{/each}}
     {{#unless isOwner}}
+    {{#if isFriend}}
     <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="red" id="removeFriendButton"><span class="ladda-label">Remove Friend</span></button></center>
+    {{/if}}
     {{/unless}}
-    <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="green" id="goToHomeButtonViewQuotes"><span class="ladda-label">Back</span></button></center>
+    <center><button class="ladda-button animated bounceInDown" data-style="expand-left" data-color="green" id="goToHomeButtonViewQuotes"><span class="ladda-label">{{backText}}</span></button></center>
 </div>
 </template>
 

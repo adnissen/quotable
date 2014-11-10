@@ -32,9 +32,7 @@ Template.sidebar.events({
   'click #myQuotes': function(){
     snapper.close();
     Session.set('author', Meteor.userId());
-    if (currentScreen)
-      Blaze.remove(currentScreen);
-    currentScreen = Blaze.render(Template.viewQuotesTemplate, document.getElementById('content'));
+    Router.go('/' + Meteor.user().username);
   },
   'click #submitFriend': function(){
     Meteor.call("sendFriendRequest", $('#addFriendField').val().toLowerCase(), function(err, data){});
@@ -64,9 +62,7 @@ Template.sidebar.events({
       Session.set('author', this.addedTo);
     else if (this._id)
       Session.set('author', this._id);
-    if (currentScreen)
-      Blaze.remove(currentScreen);
-    currentScreen = Blaze.render(Template.viewQuotesTemplate, document.getElementById('content'));
+    Router.go('/' + this.username);
   },
   'click #logOut': function(){
     Meteor.logout();

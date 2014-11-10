@@ -58,9 +58,11 @@ Meteor.users.allow({
 //we need to store email addresses so that you can't spam multiple emails
 Emails = new Mongo.Collection('emails');
 
-Meteor.publish("userData", function(id){
+Meteor.publish("userData", function(id, author){
   check(id, Match.Any);
-  
+  check(author, Match.Any);
+  if (author)
+    return Meteor.users.find({username: author});
   if (this.userId){
     if (id != undefined){
       quote = Quotes.findOne({_id: id});
@@ -86,9 +88,13 @@ Meteor.publish("quotes", function(id, author){
   //bad practice, but a bunch of subs don't need the id param so we need to do it this way
   check(id, Match.Any);
   check(author, Match.Any);
+  if (author){
+    authorUser = Meteor.users.findOne({username: author});
+    return Quotes.find({addedTo: authorUser._id});
+  }
   if (this.userId){
     if (author){
-      authorUser = Meteor.users.findOne({_id: author});
+      authorUser = Meteor.users.findOne({username: author});
       return Quotes.find({addedTo: authorUser._id});
     }
     else{

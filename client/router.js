@@ -1,4 +1,18 @@
 Router.map(function(){
+  this.route('viewQuotesTemplate', {
+    path: '/:author',
+    action: function(){
+      Session.set('tempAuthor', this.params.author);
+      Meteor.subscribe('quotes', null, this.params.author);
+      Meteor.subscribe('userData', null, this.params.author, function(){
+        var user = Meteor.users.findOne({username: Session.get('tempAuthor')})._id;
+        Session.set('author', user);
+      });
+      if (currentScreen)
+        Blaze.remove(currentScreen);
+      currentScreen = Blaze.render(Template.viewQuotesTemplate, document.getElementById('content'));
+    }
+  });
   this.route('newPassword', {
     path: '/reset-password/:token',
     action: function(){
@@ -93,7 +107,7 @@ Router.map(function(){
     }
   });
   this.route('admin', {
-    path: '/admin',
+    path: '/admin/admin',
     action: function(){
       if (Meteor.userId() == 'uPdEp6wmwASfLdyYL'){
         if (currentScreen)

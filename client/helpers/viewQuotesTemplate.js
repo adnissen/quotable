@@ -1,16 +1,31 @@
 Template.viewQuotesTemplate.helpers({
   authorQuote: function(){
-    if (!Meteor.user())
-      return;
     return Quotes.find({addedTo: Session.get('author')}, {sort: {timestamp: -1}});
   },
   isOwner: function(){
-    return (Meteor.user()._id === Session.get('author'));
+    if (Meteor.user())
+      return (Meteor.user()._id === Session.get('author'));
+    else
+      return false;
   },
   author: function(){
     if (this.addedBy === this.addedTo)
       return "overheard by " + Meteor.users.findOne({_id: this.addedTo}).username;
     return Meteor.users.findOne({_id: this.addedTo}).username;
+  },
+  isFriend: function(){
+    if (Meteor.user() == null)
+      return false;
+    if (Meteor.user().profile.friends.indexOf(Session.get('author')) != -1)
+      return true;
+    else
+      return false;
+  },
+  backText: function(){
+    if (Meteor.user() == null)
+      return 'Sign Up';
+    else
+      return 'Back';
   }
 });
 
@@ -20,9 +35,13 @@ Template.viewQuotesTemplate.rendered = function(){
 
 Template.viewQuotesTemplate.events({
   'click #goToHomeButtonViewQuotes': function(){
-    if (currentScreen)
-      Blaze.remove(currentScreen);
-    currentScreen = Blaze.render(Template.quoteControls, document.getElementById('content'));
+    if (Meteor.user() == null){
+      if (currentScreen)
+        Blaze.remove(currentScreen);
+      currentScreen = Blaze.render(Template.welcomeScreen, document.getElementById('content'));
+      return;
+    }
+    Router.go('/');
   },
 
   'click #removeFriendButton': function(){

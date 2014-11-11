@@ -45,8 +45,10 @@ Router.map(function(){
         console.log('we have a user');
         if (!snapper){
           snapper = new Snap({
-            element: document.getElementById('content'),
-            touchToDrag: false
+            element: document.getElementById('container'),
+            touchToDrag: false,
+            maxPosition: window.innerWidth,
+            minPosition: -window.innerWidth
           });
         }
         snapper.on('expandLeft', function(){

@@ -72,7 +72,7 @@ Template.sidebar.events({
       Blaze.remove(currentScreen)
     currentScreen = Blaze.render(Template.customLogin, document.getElementById('content'));
   },
-  'click i': function(event){
+  'click i.fa-thumbs-up': function(event){
     if (Meteor.user().profile.liked == undefined || Meteor.user().profile.liked.indexOf(this._id) != -1){
       Meteor.call('unlikeQuote', this._id);
       event.target.className = 'fa fa-thumbs-o-up fa-lg';
@@ -81,5 +81,23 @@ Template.sidebar.events({
       Meteor.call('likeQuote', this._id);
       event.target.className = 'fa fa-thumbs-up fa-lg';
     }
+  },
+  'click i.fa-thumbs-o-up': function(event){
+    if (Meteor.user().profile.liked == undefined || Meteor.user().profile.liked.indexOf(this._id) != -1){
+      Meteor.call('unlikeQuote', this._id);
+      event.target.className = 'fa fa-thumbs-o-up fa-lg';
+    }
+    else{
+      Meteor.call('likeQuote', this._id);
+      event.target.className = 'fa fa-thumbs-up fa-lg';
+    }
+  },
+  'click i.fa-edit': function(){
+    Router.go('/');
+    snapper.close();
+    $('#quoteEntry').focus();
+  },
+  'click i.fa-close': function(){
+    snapper.close();
   }
 });

@@ -36,11 +36,11 @@
 </head>
 
 <body>
-{{> headerView}}
-<div class="container">
-  {{#if currentUser}}
+{{#if currentUser}}
   {{> sidebar}}
-  {{/if}}
+{{/if}}
+<div id="container" class="container">
+  {{> headerView}}
   <div class="content snap-content" id="content">
   </div>
 </div>

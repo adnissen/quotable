@@ -25,6 +25,7 @@ Template.headerView.events({
       snapper.close();
     } else {
       snapper.open('left');
+      $('#inviteFriend').show();
       $('.snap-drawer-left').show();
       $('.snap-drawer-right').hide();
     }

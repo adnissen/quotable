@@ -1,23 +1,21 @@
 <template name="quoteControls">
 <div id="quoteEntryDiv">
   <center>
-    <textarea id="quoteEntry" tabindex="1" class="topcoat-textarea" rows="10" cols="22"></textarea><br><br>
+    <textarea id="quoteEntry" tabindex="1" class="topcoat-textarea" rows="24" cols="24"></textarea><br><br>
   </center>
 </div>
 <div id="quoteSubmitDiv">
-  <center>
-    Where did you hear it?
-    <br>
-    <br>
+  
+    <small>Where did you hear it?</small>
     <select id="userDropdown">
       <option value="{{currentUser.username}}">I overheard it<i class="fa fa-arrow-down"></i></option>
       {{#each friends}}
       <option value="{{username}}">{{username}}</option>
       {{/each}}
     </select>
-  </center>
-  <button class="ladda-button" data-style="expand-left" data-color="green" id="submitQuote"><span class="ladda-label" >Quote it!</span></button><br><br>
+  <br>
 </div>
+  <button class="ladda-button" data-style="expand-left" data-color="green" id="submitQuote"><span class="ladda-label" >Quote it!</span></button>
 </template>
 
 

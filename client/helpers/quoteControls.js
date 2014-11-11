@@ -12,6 +12,7 @@ Template.quoteControls.helpers({
 });
 Template.quoteControls.rendered = function(){
   $('#quoteEntry').show();
+  $('#inviteFriend').hide();
   //$('#quoteEntry').focus();
   document.addEventListener("resume", function(){
     $('#quoteEntry').focus();

@@ -26,7 +26,6 @@ option{
 #quoteSubmitDiv{
   text-align: left;
   color: #999;
-  padding-left: 10px;
   background-color: rgba(92, 123, 122, 1);
 }
 @media (min-height: 480px){

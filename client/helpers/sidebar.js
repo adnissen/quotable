@@ -99,5 +99,7 @@ Template.sidebar.events({
   },
   'click i.fa-close': function(){
     snapper.close();
+    $('.content').height(window.innerHeight - 70);
+
   }
 });

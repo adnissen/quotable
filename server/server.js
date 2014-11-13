@@ -16,6 +16,7 @@ Accounts.onCreateUser(function(options, user){
   user.profile.addedQuotes = new Array();
   user.profile.liked = new Array();
   user.profile.seenWelcome = false;
+  user.profile.lastEmail = 0;
 
   return user;
 });
@@ -123,7 +124,7 @@ Meteor.methods({
 
     var thisUser = Meteor.users.findOne({_id: this.userId});
     var to = email;
-    var from = 'invites@quotable.meteor.com';
+    var from = 'invites@quotableapp.io';
     var subject = "You've been invited to quotable!";
     var text = "Hi! You've been invited by " + thisUser.username + " to try out quotable, an app that lets you remember and share funny things you and your friends say or overhear.\n\nTo get started, all you need to do is visit http://quotable.meteor.com>quotable.meteor.com and sign up! It's totally free, and we won't ever ask for any more personal information than a username and email. To add your friend, simply open the left menu and add " + thisUser.username + " as a friend. That's it!\n\n\nWe hope you enjoy your time with quotable!\n-The quotable Team.";
     Email.send({to:to, from:from, subject:subject, text:text});
@@ -190,6 +191,7 @@ Meteor.methods({
     //set _timestamp to the current time
     _timestamp = Date.now();
     thisUser = Meteor.users.findOne({_id: this.userId});
+    user = Meteor.users.findOne({_id: _addedTo});
     if (thisUser.profile.friends.indexOf(_addedTo) === -1 && thisUser._id != _addedTo)
       return "you're not friends with this person";
     _addedBy = this.userId;
@@ -197,6 +199,17 @@ Meteor.methods({
     Meteor.users.update({_id: _addedTo}, {$addToSet: {'profile.quotes': addedQuote}});
     Meteor.users.update({_id: this.userId}, {$addToSet: {'profile.addedQuotes': addedQuote}});
 
+    if (this.userId != _addedTo && user.emails != undefined){
+      if (Date.now() - user.profile.lastEmail >= 86400000){
+        Meteor.users.update({_id: _addedTo}, {$set: {'profile.lastEmail': Date.now()}});
+        var to = user.emails[0].address;
+        var from = 'quotes@quotableapp.io';
+        var subject = thisUser.username + ' quoted you!';
+        var text = "Hi " + user.username + ", you've been quoted! Open up the app or visit <a href='http://quotable.meteor.com/quotes/" + addedQuote + "'>this page</a> to find out what you said that " + thisUser.username + " thought was worth quoting!\n\nThanks,\nThe Quotable Team";
+        Email.send({to:to, from:from, subject:subject, text:text});
+
+      }
+    }
     //increment unread
     Meteor.users.update({_id: {$in: thisUser.profile.friends}}, {$inc: {'profile.unread': 1}}, {multi: true});
     return addedQuote._id;

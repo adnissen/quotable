@@ -17,6 +17,7 @@ Accounts.onCreateUser(function(options, user){
   user.profile.liked = new Array();
   user.profile.seenWelcome = false;
   user.profile.lastEmail = 0;
+  user.profile.optedOut = false;
 
   return user;
 });
@@ -200,7 +201,9 @@ Meteor.methods({
     Meteor.users.update({_id: this.userId}, {$addToSet: {'profile.addedQuotes': addedQuote}});
 
     if (this.userId != _addedTo && user.emails != undefined){
-      if (Date.now() - user.profile.lastEmail >= 86400000){
+      if (user.profile.optedOut == undefined)
+        Meteor.users.update({_id: _addedTo}, {$set: {'profile.optedOut': false}});
+      if (Date.now() - user.profile.lastEmail >= 86400000 && user.profile.optedOut){
         Meteor.users.update({_id: _addedTo}, {$set: {'profile.lastEmail': Date.now()}});
         var to = user.emails[0].address;
         var from = 'quotes@quotableapp.io';

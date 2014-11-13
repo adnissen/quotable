@@ -13,7 +13,7 @@ Template.customSignup.events({
   },
 
   'click #customLoginCreate': function(){
-    if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0){
+    if ($('#customLoginUsername').val().length != 0 && $('#customLoginPassword').val().length != 0 && $('customLoginEmail').val().length != 0){
       Accounts.createUser({username: $('#customLoginUsername').val().toLowerCase(), password: $('#customLoginPassword').val(), email: $('#customLoginEmail').val()}, function(err){
         if (err)
           swal('Oops', "That username is already taken!", "error");

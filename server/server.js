@@ -215,7 +215,7 @@ Meteor.methods({
     }
     //increment unread
     Meteor.users.update({_id: {$in: thisUser.profile.friends}}, {$inc: {'profile.unread': 1}}, {multi: true});
-    return addedQuote._id;
+    return {quote: addedQuote};
   },
   removeFriend: function(friendId){
     if (!this.userId)

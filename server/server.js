@@ -101,7 +101,7 @@ Meteor.publish("quotes", function(id, author){
     }
     else{
       user = Meteor.users.findOne({_id: this.userId});
-      return Quotes.find({$or: [{addedTo: this.userId}, {addedTo: {$in: user.profile.friends}}, {_id: id}]}, {sort: {timestamp: -1}, limit: 5});
+      return Quotes.find({$or: [{addedTo: user._id}, {addedTo: {$in: user.profile.friends}}, {_id: id}]}, {sort: {timestamp: -1}});
     }
   }
   else{

@@ -29,8 +29,6 @@
 
         <button class="ladda-button" data-style="expand-left" data-color="green" id="inviteFriend"><span class="ladda-label" >Invite Friend to Quotable</span></button><br><br><br>
 
-
-
         <div id="rewards"></div><br>
         <button class="ladda-button" data-style="expand-left" data-color="green" id="logOut"><span class="ladda-label" >sign out</span></button><br><br><br>
 
@@ -42,44 +40,20 @@
       <br>
       <i class="fa fa-edit fa-lg"></i>
       <i class="fa fa-close fa-lg"></i>
-      <center><h3 class='sidebarHeader'>Recent Quotes</h3></center>
+      <h1><center>Your Recent Quotes</center></h1>
       {{#each recentQuote}}
       <div id="quote" class="sidebarQuotes">
         <center>"{{text}}"</center>
       </div>
         <br>
       <div id="quoteAuthor">
-        <center> - {{author}} {{time}} </center>
+        <center>{{time}} </center>
       </div>
-      <br>
-      {{#if liked}}
-      <center>{{likes}}  <i class="fa fa-thumbs-up fa-lg"></i></center>
-      {{else}}
-      <center>{{likes}}  <i class="fa fa-thumbs-o-up fa-lg"></i></center>
-      {{/if}}
       <br>
       <hr>
       <br>
       {{/each}}
-      <center><h3 class='sidebarHeader'>Top Quotes</h3></center>
-      {{#each topQuote}}
-      <div id="quote">
-        <center>"{{text}}"</center>
-      </div>
-        <br>
-      <div id="quoteAuthor" class='sidebarQuotes'>
-        <center> - {{author}} {{time}}</center>
-      </div>
-      <br>
-      {{#if liked}}
-      <center>{{likes}}  <i class="fa fa-thumbs-up fa-lg"></i></center>
-      {{else}}
-      <center>{{likes}}  <i class="fa fa-thumbs-o-up fa-lg"></i></center>
-      {{/if}}
-      <br>
-      <hr>
-      <br>
-      {{/each}}
+      <center><div id='myQuotes'><h1> More Quotes </h1></div></center>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 Template.sidebar.helpers({
   recentQuote: function(){
-    return Quotes.find({}, {sort: {timestamp: -1}, limit: 5});
+    return Quotes.find({addedTo: Meteor.userId()}, {sort: {timestamp: -1}, limit: 10});
   },
   topQuote: function(){
     return Quotes.find({}, {sort: {likes: -1}, limit: 5});
@@ -18,7 +18,7 @@ Template.sidebar.helpers({
       return "overheard by " + Meteor.users.findOne({_id: this.addedTo}).username;
     }
     else
-  return Meteor.users.findOne({_id: this.addedTo}).username;
+      return Meteor.users.findOne({_id: this.addedTo}).username;
   },
   time: function(){
     return moment(this.timestamp).format('dddd, MMMM Do');

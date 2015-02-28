@@ -36,7 +36,7 @@ Template.quoteControls.events({
     Meteor.call("addQuote", $('#quoteEntry').val(), addToUser._id, function(err, data){
       keen.addEvent('addQuote', {username: Meteor.user().username, quote: $('#quoteEntry').val(), addedTo: addToUser.username, timestamp: new Date().toISOString()});
       submitQuoteButton.stop();
-      swal("Nice!", "Quote Added!", "success");
+      Router.go('/quotes/' + data.quote);
     });
     return;
   }
